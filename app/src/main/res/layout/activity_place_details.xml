@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradiant_background"
+        android:fitsSystemWindows="true">
+
+
+        <ImageView
+            android:id="@+id/contact_us_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_call"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circle" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:paddingBottom="4dip"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:stepSize="0.5"
+            android:theme="@style/RatingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rate_us_text" />
+        <com.mancj.slimchart.SlimChart
+            android:id="@+id/slimChart"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="@id/rating_details"
+            app:layout_constraintTop_toBottomOf="@id/rating_details"
+            app:roundedEdges="true"
+            app:strokeWidth="8dp"
+            app:text="8.8"
+            app:textColor="@color/colorAccent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@id/slimChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <TextView
+                android:id="@+id/likes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_content"
+                android:textColor="@color/text_color"
+                android:drawableStart="@drawable/ic_likes"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_likes"
+                android:drawablePadding="4dp"/>
+            <SeekBar
+                android:id="@+id/seekBar_likes"
+                android:layout_width="@dimen/seekbar_width"
+                android:layout_height="@dimen/seekbar_height"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@android:color/transparent" />
+            <TextView
+                android:id="@+id/okays_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_content"
+                android:textColor="@color/text_color"
+                android:drawableLeft="@drawable/ic_okays"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/ic_okays"
+                android:drawablePadding="4dp"/>
+            <SeekBar
+                android:id="@+id/seekBar_okays"
+                android:layout_width="@dimen/seekbar_width"
+                android:layout_height="@dimen/seekbar_height"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@android:color/transparent"
+                 />
+            <TextView
+                android:id="@+id/dislikes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_content"
+                android:textColor="@color/text_color"
+                android:drawableStart="@drawable/ic_dislikes"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_dislikes"
+                android:drawablePadding="4dp"/>
+            <SeekBar
+                android:id="@+id/seekBar_dislikes"
+                android:layout_width="@dimen/seekbar_width"
+                android:layout_height="@dimen/seekbar_height"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@android:color/transparent"
+                 />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/rate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/rating_word"
+            android:textColor="#b9b9b9"
+            android:textSize="@dimen/text_header"
+            app:layout_constraintTop_toBottomOf="@id/contact_us_image"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/rating_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_details"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_content"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/rate_text"
+            app:layout_constraintTop_toBottomOf="@id/rate_text" />
+
+        <TextView
+            android:id="@+id/where_we_located"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/where_we_located"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_header"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/slimChart" />
+
+        <TextView
+            android:id="@+id/rate_us_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/rate_us"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_header"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/RV_places_location" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_places_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/where_we_located" />
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            app:ci_drawable="@drawable/circleindicator_round"
+            app:ci_drawable_unselected="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_pager" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
