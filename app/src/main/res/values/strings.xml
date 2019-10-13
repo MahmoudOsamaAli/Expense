@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shopping</string>
+    <string name="app_name">Expense</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_notifications">Notifications</string>
@@ -14,5 +14,9 @@
     <string name="likes_format">% likes</string>
     <string name="okay_format">% okay</string>
     <string name="dislikes_format">% dislikes</string>
+    <string name="open_drawer">open drawer</string>
+    <string name="close_drawer">close drawer</string>
+    <string name="add_project">Add a Project</string>
+    <string name="about_us">About Us</string>
 
 </resources>

@@ -1,12 +1,9 @@
 package com.example.shopping.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -16,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopping.R;
-import com.example.shopping.activities.ContactUsActivity;
 import com.example.shopping.data.Data;
 import com.example.shopping.model.HomeViewModel;
 import com.example.shopping.adapters.RVHomeAdapter;
@@ -30,8 +26,6 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.categories_RV)
     RecyclerView mRV;
-    @BindView(R.id.logo_image)
-    ImageView logoImage;
     @BindView(R.id.search_view_fragment)
     SearchView mSearchView;
 
@@ -52,9 +46,6 @@ public class HomeFragment extends Fragment {
         mRV.setLayoutManager(manager);
         RVHomeAdapter adapter = new RVHomeAdapter(getContext() , data);
         mRV.setAdapter(adapter);
-        logoImage.setOnClickListener(view -> {
-            getContext().startActivity(new Intent(getContext() , ContactUsActivity.class));
-        });
     }
 
     private void searchViewConfig() {

@@ -21,16 +21,6 @@ public class FavoriteFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        favoriteViewModel =
-                ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_favorite, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        favoriteViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        return inflater.inflate( R.layout.fragment_favorite , container , false);
     }
 }
