@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,23 +30,34 @@ public class NotificationsFragment extends Fragment {
 
     @BindView(R.id.RV_notification_fragment)
     RecyclerView mRV;
+    @BindView(R.id.search_view_fragment_notification)
+    SearchView mSearchView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notifications , container, false);
+        return inflater.inflate(R.layout.fragment_notifications, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this , view);
+        ButterKnife.bind(this, view);
         init();
     }
 
     private void init() {
+        searchViewConfig();
+        RVConfig();
+    }
+
+    private void RVConfig() {
         ArrayList<RestaurantModel> data = Data.getSelectedCategoryData();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRV.setLayoutManager(manager);
-        SelectedCategoryAdapter adapter = new SelectedCategoryAdapter(getContext() , data);
+        SelectedCategoryAdapter adapter = new SelectedCategoryAdapter(getContext(), data);
         mRV.setAdapter(adapter);
+    }
+
+    private void searchViewConfig() {
+        mSearchView.setOnClickListener(view -> mSearchView.setIconified(false));
     }
 }

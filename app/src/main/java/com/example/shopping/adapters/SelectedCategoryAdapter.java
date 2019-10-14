@@ -54,12 +54,8 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
             super(itemView);
             mName = itemView.findViewById(R.id.place_name);
             mImage = itemView.findViewById(R.id.place_image);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext , PlaceDetails.class));
-                }
-            });
+            itemView.setOnClickListener(v ->
+                    mContext.startActivity(new Intent(mContext , PlaceDetails.class)));
         }
     }
 }

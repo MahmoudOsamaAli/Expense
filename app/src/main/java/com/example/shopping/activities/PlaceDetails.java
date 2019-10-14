@@ -29,9 +29,10 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class PlaceDetails extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private CircleIndicator circleIndicator;
-    private MyPagerAdapter myPager;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    @BindView(R.id.circle)
+    CircleIndicator circleIndicator;
     @BindView(R.id.seekBar_likes)
     SeekBar seekBar1;
     @BindView(R.id.seekBar_okays)
@@ -44,6 +45,9 @@ public class PlaceDetails extends AppCompatActivity {
     TextView okeyText;
     @BindView(R.id.dislikes_text)
     TextView disLikeText;
+    @BindView(R.id.RV_places_location)
+    RecyclerView recyclerView;
+    private MyPagerAdapter myPager;
 
 
     @Override
@@ -56,26 +60,28 @@ public class PlaceDetails extends AppCompatActivity {
 
     private void init() {
         slimChartConfig(8.8);
-        seekBarConfig(85 , 6 , 9);
-        ArrayList<PlaceImage> data = Data.getPlaceImages();
-        myPager = new MyPagerAdapter(this, data);
-        viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(myPager);
-        viewPager.setCurrentItem(myPager.getCount() - 1);
-        circleIndicator = findViewById(R.id.circle);
-        circleIndicator.setViewPager(viewPager);
+        seekBarConfig(85, 6, 9);
+        viewPagerConfig();
+        RVConfig();
+    }
 
-
+    private void RVConfig() {
         ArrayList<locationModel> mData = Data.getLocations();
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        RecyclerView recyclerView = findViewById(R.id.RV_places_location);
         recyclerView.setLayoutManager(manager);
         LocationAdapter adapter1 = new LocationAdapter(this, mData);
         recyclerView.setAdapter(adapter1);
-
     }
 
-    private void seekBarConfig(int value1 , int value2 , int value3) {
+    private void viewPagerConfig() {
+        ArrayList<PlaceImage> data = Data.getPlaceImages();
+        myPager = new MyPagerAdapter(this, data);
+        viewPager.setAdapter(myPager);
+        viewPager.setCurrentItem(myPager.getCount() - 1);
+        circleIndicator.setViewPager(viewPager);
+    }
+
+    private void seekBarConfig(int value1, int value2, int value3) {
         seekBar1.setMax(100);
         seekBar2.setMax(100);
         seekBar3.setMax(100);
@@ -103,13 +109,13 @@ public class PlaceDetails extends AppCompatActivity {
         SlimChart slimChart = findViewById(R.id.slimChart);
 
         int[] colors = new int[4];
-        colors[0] = Color.rgb(185, 185,185);
+        colors[0] = Color.rgb(185, 185, 185);
         colors[1] = Color.rgb(23, 246, 9);
         slimChart.setColors(colors);
 
         final float[] stats = new float[2];
         stats[0] = 100;
-        stats[1] = (float) state *10;
+        stats[1] = (float) state * 10;
         slimChart.setStats(stats);
         //Play animation
         slimChart.setStartAnimationDuration(1500);

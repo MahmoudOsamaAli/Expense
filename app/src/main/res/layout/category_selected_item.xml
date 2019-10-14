@@ -11,15 +11,16 @@
         android:id="@+id/image_fram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/place_image"
-            android:layout_width="55dp"
-            android:layout_height="55dp" />
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:padding="8dp" />
     </FrameLayout>
 
     <TextView
@@ -29,8 +30,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/title_notifications"
-        android:textSize="@dimen/text_header"
         android:textColor="@color/text_color"
+        android:textSize="@dimen/text_header"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/image_fram"
@@ -38,8 +39,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#d1d1ba"
+        android:layout_height="@dimen/border_width"
+        android:background="@color/gray_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

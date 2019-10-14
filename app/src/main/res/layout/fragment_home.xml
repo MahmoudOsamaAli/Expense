@@ -12,12 +12,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/search_view_height"
-            android:layout_margin="8dp"
-            android:background="@drawable/search_view_background"
-            android:clickable="true"
-            android:focusable="true"
+            style="@style/search_view_style"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -18,5 +18,11 @@
     <string name="close_drawer">close drawer</string>
     <string name="add_project">Add a Project</string>
     <string name="about_us">About Us</string>
+    <string name="english">English</string>
+    <string name="arabic">عربي</string>
+    <string name="profile_name">Ali Ussama</string>
+    <string name="profile_mail">aliUssama@gmail.com</string>
+    <string name="phone_number">01097170941</string>
+    <string name="profile_country">Egypt</string>
 
 </resources>

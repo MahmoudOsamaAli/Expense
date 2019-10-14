@@ -13,8 +13,6 @@ import com.example.shopping.model.FavoriteViewModel;
 
 public class ContactUsFragment extends Fragment {
 
-    private FavoriteViewModel favoriteViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_contact_us, container, false);
     }

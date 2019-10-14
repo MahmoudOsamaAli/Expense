@@ -9,4 +9,6 @@
     <dimen name="text_content">12sp</dimen>
     <dimen name="seekbar_width">200dp</dimen>
     <dimen name="seekbar_height">4dp</dimen>
+    <dimen name="border_width">0.5dp</dimen>
+    <dimen name="profile_border">16dp</dimen>
 </resources>

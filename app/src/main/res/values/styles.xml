@@ -43,4 +43,14 @@
         <item name="color">@android:color/white</item>
     </style>
 
+    <style name="search_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/search_view_height</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/search_view_background</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>

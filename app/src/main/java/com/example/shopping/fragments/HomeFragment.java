@@ -41,6 +41,10 @@ public class HomeFragment extends Fragment {
 
     private void init() {
         searchViewConfig();
+        RVConfig();
+    }
+
+    private void RVConfig() {
         ArrayList<HomeViewModel> data = Data.getCategoriesData();
         GridLayoutManager manager = new GridLayoutManager(getContext() , 2);
         mRV.setLayoutManager(manager);

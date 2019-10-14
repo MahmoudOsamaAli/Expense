@@ -2,24 +2,22 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradiant_background"
         android:fitsSystemWindows="true">
-
-
         <ImageView
             android:id="@+id/contact_us_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:src="@drawable/ic_call"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/circle" />
-
+            app:layout_constraintTop_toBottomOf="@id/circle"
+            android:focusable="true" />
         <RatingBar
             android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
@@ -43,7 +41,7 @@
             app:roundedEdges="true"
             app:strokeWidth="8dp"
             app:text="8.8"
-            app:textColor="@color/colorAccent" />
+            app:textColor="@color/text_color" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +110,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:text="@string/rating_word"
-            android:textColor="#b9b9b9"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
             android:textSize="@dimen/text_header"
             app:layout_constraintTop_toBottomOf="@id/contact_us_image"
             app:layout_constraintStart_toStartOf="parent" />
@@ -124,7 +123,6 @@
             android:text="@string/rating_details"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_content"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/rate_text"
             app:layout_constraintTop_toBottomOf="@id/rate_text" />
 
@@ -140,7 +138,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/slimChart" />
-
         <TextView
             android:id="@+id/rate_us_text"
             android:layout_width="wrap_content"
@@ -153,8 +150,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/RV_places_location" />
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV_places_location"
             android:layout_width="match_parent"
@@ -162,8 +157,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/where_we_located" />
-
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
@@ -171,7 +164,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/circle"
             android:layout_width="wrap_content"
@@ -179,11 +171,9 @@
             android:layout_gravity="center"
             android:padding="16dp"
             app:ci_drawable="@drawable/circleindicator_round"
-            app:ci_drawable_unselected="@android:color/darker_gray"
+            app:ci_drawable_unselected="@color/gray_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_pager" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
