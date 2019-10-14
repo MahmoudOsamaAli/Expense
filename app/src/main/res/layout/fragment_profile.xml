@@ -19,6 +19,9 @@
         android:layout_marginBottom="70dp"
         app:cardCornerRadius="4dp"
         android:elevation="4dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,13 +39,11 @@
                 android:padding="8dp"
                 tools:src="@drawable/restaurant"/>
         </FrameLayout>
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingBottom="20dp"
                 android:layout_marginTop="16dp">
                 <TextView
                     android:id="@+id/profile_name"
@@ -119,7 +120,7 @@
                     android:layout_marginBottom="@dimen/profile_border"/>
 
             </LinearLayout>
-            </ScrollView>
         </LinearLayout>
+        </ScrollView>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

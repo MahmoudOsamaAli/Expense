@@ -8,7 +8,6 @@
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -38,7 +37,6 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:src="@drawable/ic_logo" />
         </androidx.appcompat.widget.Toolbar>
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
@@ -57,6 +55,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/text_color"
         app:itemTextColor="@color/text_color"
