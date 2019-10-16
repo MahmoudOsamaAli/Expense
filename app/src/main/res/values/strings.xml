@@ -24,5 +24,14 @@
     <string name="profile_mail">aliUssama@gmail.com</string>
     <string name="phone_number">01097170941</string>
     <string name="profile_country">Egypt</string>
+    <string name="new_project_txt">New Project</string>
+    <string name="add_photo_text">Add Photo</string>
+    <string name="add_photo_details">Supported formats are .jpg,.gif and .png . Each picture must not exceed 5 Mb</string>
+    <string name="select_a_category">Select a Category</string>
+    <string name="title_text">Title</string>
+    <string name="where_you_located_text">Where you located</string>
+    <string name="website_text">Website</string>
+    <string name="phone_number_text">Phone number</string>
+    <string name="post_ad_text">Post Ad</string>
 
 </resources>
