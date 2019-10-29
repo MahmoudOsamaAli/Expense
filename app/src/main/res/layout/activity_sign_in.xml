@@ -55,7 +55,7 @@
                 android:layout_below="@id/logo"
                 android:background="?android:attr/selectableItemBackground"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo">
@@ -67,7 +67,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="@color/text_color"
                     android:textSize="30sp" />
 
@@ -161,7 +161,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/search_view_background"
                         android:fontFamily="sans-serif-light"
-                        android:hint="Enter First Name And Last Name"
+                        android:hint="@string/enter_first_name_and_last_name"
                         android:inputType="textPersonName"
                         android:paddingLeft="15dp"
                         android:paddingEnd="15dp"
@@ -178,7 +178,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/search_view_background"
                         android:fontFamily="sans-serif-light"
-                        android:hint="Enter E-mail"
+                        android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:paddingLeft="15dp"
                         android:paddingEnd="15dp"
@@ -201,7 +201,7 @@
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/search_view_background"
                             android:fontFamily="sans-serif-light"
-                            android:hint="Enter Password"
+                            android:hint="@string/password"
                             android:inputType="textPassword"
                             android:paddingLeft="15dp"
                             android:paddingEnd="15dp"
@@ -225,7 +225,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/search_view_background"
                         android:fontFamily="sans-serif-light"
-                        android:hint="Confirm Password"
+                        android:hint="@string/confirm_password"
                         android:inputType="textPassword"
                         android:paddingLeft="15dp"
                         android:paddingEnd="15dp"
@@ -244,7 +244,7 @@
                         android:layout_marginRight="3dp"
                         android:background="@drawable/signup_custom_bg"
                         android:padding="8dp"
-                        android:text="Sign up"
+                        android:text="@string/sign_up"
                         android:textAllCaps="false"
                         android:textColor="@color/text_color" />
 
@@ -255,7 +255,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
-                        android:text="Continue with google"
+                        android:text="@string/continue_with_google"
                         app:isDarkTheme="false" />
 
                     <Button
@@ -269,7 +269,7 @@
                         android:drawableStart="@drawable/ic_facebook_white"
                         android:drawableLeft="@drawable/ic_facebook_white"
                         android:padding="8dp"
-                        android:text="Sign up with facebook"
+                        android:text="@string/sign_up_with_facebook"
                         android:textAllCaps="false"
                         android:textColor="@color/text_color" />
 
@@ -283,7 +283,7 @@
                         android:drawableStart="@drawable/ic_twitter_white"
                         android:drawableLeft="@drawable/ic_twitter_white"
                         android:padding="8dp"
-                        android:text="Sign up with twitter"
+                        android:text="@string/sign_up_with_twitter"
                         android:textAllCaps="false" />
 
                     <TextView
@@ -297,7 +297,7 @@
                         android:drawableLeft="@drawable/ic_arrow_left"
                         android:focusable="true"
                         android:padding="8dp"
-                        android:text="back"
+                        android:text="@string/back"
                         android:textColor="@color/text_color"
                         android:textSize="16sp" />
                 </LinearLayout>

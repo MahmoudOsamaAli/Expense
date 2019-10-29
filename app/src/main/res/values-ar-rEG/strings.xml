@@ -41,4 +41,11 @@
     <string name="str_ok_lbl">حسنا</string>
     <string name="loading">جاي التحميل...</string>
     <string name="don_t_have_an_account_sign_up">ليس لديك حساب؟ سجل الآن!</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="enter_first_name_and_last_name">الاسم الاول و اسم العائلة</string>
+    <string name="confirm_password">تاكيد كلمة المرور</string>
+    <string name="continue_with_google">التسجيل بحساب جوجل</string>
+    <string name="sign_up_with_facebook">التسجيل بحساب الفيسبوك</string>
+    <string name="sign_up_with_twitter">التسجيل بحساب تويتر</string>
+    <string name="back">الرجوع</string>
 </resources>
