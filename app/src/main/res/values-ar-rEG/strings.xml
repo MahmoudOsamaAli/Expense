@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">الرئيسية</string>
+    <string name="title_favorite">المفضلة</string>
+    <string name="title_notifications">الاشعارات</string>
+    <string name="title_profile">الحساب</string>
+    <string name="pick_a_category">اختر فئة</string>
+    <string name="contact_us">اتصل بنا</string>
+    <string name="where_we_located">موقعنا</string>
+    <string name="rate_us">قيمنا</string>
+    <string name="rating_word">التقييم</string>
+    <string name="rating_details">تقييم 8.8 من 10 مبني على 13.500 زائر</string>
+    <string name="likes_format">الاعجابات</string>
+    <string name="okay_format">متوسط</string>
+    <string name="dislikes_format">لم يعجبني</string>
+    <string name="add_project">اضافة مشروع</string>
+    <string name="about_us">عننا</string>
+    <string name="english">English</string>
+    <string name="arabic">عربي</string>
+    <string name="open_drawer">افتح النافذه</string>
+    <string name="close_drawer">اغلق النافذه</string>
+    <string name="profile_name">Ali Ussama</string>
+    <string name="profile_mail">aliUssama@gmail.com</string>
+    <string name="phone_number">01097170941</string>
+    <string name="profile_country">Egypt</string>
+    <string name="new_project_txt">مشروع جديد</string>
+    <string name="add_photo_text">اضافة صورة</string>
+    <string name="add_photo_details">التنسيقات المدعومة .jpg, gif و png .. كل صورة لا يجب ان تتعدي 5 ميجابايت</string>
+    <string name="select_a_category">اختر فئة</string>
+    <string name="title_text">اسم المشروع</string>
+    <string name="where_you_located_text">اضف موقعك</string>
+    <string name="website_text">الموقع الالكتروني</string>
+    <string name="phone_number_text">رقم الجوال</string>
+    <string name="post_ad_text">اضف اعلان</string>
+    <string name="sign_out">تسجيل خروج</string>
+    <string name="sign_up">حساب جديد</string>
+    <string name="login_now">تسجيل دخول</string>
+    <string name="required">مطلوب*</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="str_ok_lbl">حسنا</string>
+    <string name="loading">جاي التحميل...</string>
+    <string name="don_t_have_an_account_sign_up">ليس لديك حساب؟ سجل الآن!</string>
+</resources>
