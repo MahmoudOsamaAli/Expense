@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_background"
     android:fitsSystemWindows="true"
-    tools:context=".activities.SelectedCategory">
+    tools:context=".view.activities.selectedCategory.SelectedCategory">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/selected_category_toolbar"

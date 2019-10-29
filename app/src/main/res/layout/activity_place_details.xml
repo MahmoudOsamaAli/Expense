@@ -13,24 +13,12 @@
             android:layout_height="@dimen/logo_height"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_call"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/circle"
-            android:focusable="true" />
-        <RatingBar
-            android:id="@+id/rating_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:paddingBottom="4dip"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:stepSize="0.5"
-            android:theme="@style/RatingBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rate_us_text" />
+            />
         <com.mancj.slimchart.SlimChart
             android:id="@+id/slimChart"
             android:layout_width="90dp"
@@ -43,6 +31,7 @@
             app:text="8.8"
             app:textColor="@color/text_color" />
         <LinearLayout
+            android:id="@+id/seek_bars_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -115,7 +104,6 @@
             android:textSize="@dimen/text_header"
             app:layout_constraintTop_toBottomOf="@id/contact_us_image"
             app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/rating_details"
             android:layout_width="wrap_content"
@@ -125,7 +113,6 @@
             android:textSize="@dimen/text_content"
             app:layout_constraintStart_toStartOf="@id/rate_text"
             app:layout_constraintTop_toBottomOf="@id/rate_text" />
-
         <TextView
             android:id="@+id/where_we_located"
             android:layout_width="wrap_content"
@@ -137,19 +124,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/slimChart" />
-        <TextView
-            android:id="@+id/rate_us_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/rate_us"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_header"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/RV_places_location" />
+            app:layout_constraintTop_toBottomOf="@id/rate_buttons" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV_places_location"
             android:layout_width="match_parent"
@@ -161,6 +136,7 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="220dp"
+            android:background="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -175,5 +151,87 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_pager" />
+        <LinearLayout
+            android:id="@+id/rate_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/seek_bars_linear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/rate_us"
+                android:textSize="@dimen/text_header"
+                android:textStyle="bold"
+                android:textColor="@color/text_color"/>
+            <ImageView
+                android:id="@+id/like_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_likes" />
+            <ImageView
+                android:id="@+id/okay_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_okays"
+                />
+            <ImageView
+                android:id="@+id/dislike_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_dislikes"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/websites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/RV_places_location"
+            app:layout_constraintStart_toStartOf="@id/rate_text"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visit Us on "
+                android:textSize="@dimen/text_header"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp" />
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_facebook"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"/>
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_youtube"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"/>
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_twitter"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"/>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.example.shopping"
+        applicationId "com.example.expense"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -50,4 +50,18 @@ dependencies {
 
     implementation 'com.mindorks.android:placeholderview:1.0.3'
     annotationProcessor 'com.mindorks.android:placeholderview-compiler:1.0.3'
+
+    //zoom-in zoom-out for images
+    implementation 'com.commit451:PhotoView:1.2.4'
+    //Google Play services
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+    //facebook
+    implementation 'com.facebook.android:facebook-android-sdk:5.8.0'
+    //firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:6.0.2'
 }
+apply plugin: 'com.google.gms.google-services'
