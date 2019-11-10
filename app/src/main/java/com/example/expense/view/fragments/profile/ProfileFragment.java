@@ -43,28 +43,33 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this , view);
+        ButterKnife.bind(this, view);
         init();
     }
 
     private void init() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String name = null;
-        String email = null;
-        String gender = null;
-        if (user != null) {
-            name = user.getDisplayName();
-            email = user.getEmail();
-            gender = user.getPhoneNumber();
-            profileName.setText(name);
-            profileMail.setText(email);
+        try {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            String name = null;
+            String email = null;
+            String gender = null;
+            if (user != null) {
+                name = user.getDisplayName();
+                email = user.getEmail();
+                gender = user.getPhoneNumber();
+                profileName.setText(name);
+                profileMail.setText(email);
 
-        }else{
-            profileName.setText("");
-            profileMail.setText("");
+            } else {
+                profileName.setText("");
+                profileMail.setText("");
+            }
+            if (user != null && user.getPhotoUrl() != null)
+                Picasso.get().load(user.getPhotoUrl().toString()).into(profileImage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Picasso.get().load(user.getPhotoUrl().toString()).into(profileImage);
 //        profileImage.setImageResource(R.drawable.restaurant);
     }
 }

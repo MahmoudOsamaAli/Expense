@@ -73,45 +73,50 @@
                     android:paddingEnd="15dp"
                     android:paddingRight="15dp"
                     android:textColor="@color/text_color"
+                    android:textColorHint="@color/colorAccent"
                     android:textSize="15sp"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark">
-                <EditText
-                    android:id="@+id/login_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/search_view_background"
-                    android:fontFamily="sans-serif-light"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:paddingLeft="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingRight="15dp"
-                    android:textColor="@color/text_color"
-                    android:textSize="15sp"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:passwordToggleTint="@color/colorAccent">
+
+                    <EditText
+                        android:id="@+id/login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/search_view_background"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:paddingLeft="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/colorAccent"
+                        android:textSize="15sp"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
                     android:layout_marginTop="3dp"
-                    android:layout_marginBottom="3dp">
-                <Button
-                    android:id="@+id/log_in_button"
-                    style="@style/log_in_buttons"
-                    android:text="@string/login_now" />
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/colorAccent">
+
+                    <Button
+                        android:id="@+id/log_in_button"
+                        style="@style/log_in_buttons"
+                        android:text="@string/login_now" />
                 </FrameLayout>
 
                 <TextView
@@ -132,7 +137,7 @@
                 android:id="@+id/rellay2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo">
@@ -165,6 +170,7 @@
                         android:paddingEnd="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="15sp"
                         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
@@ -182,15 +188,17 @@
                         android:paddingEnd="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="15sp"
                         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
                         app:hintEnabled="false"
-                        app:passwordToggleEnabled="true"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+                        app:passwordToggleEnabled="true">
+
                         <EditText
                             android:id="@+id/password_et"
                             android:layout_width="match_parent"
@@ -205,6 +213,7 @@
                             android:paddingEnd="15dp"
                             android:paddingRight="15dp"
                             android:textColor="@color/text_color"
+                            android:textColorHint="@color/colorAccent"
                             android:textSize="15sp"
                             android:theme="@style/ThemeOverlay.AppCompat.Dark" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -212,45 +221,48 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
                         app:hintEnabled="false"
-                        app:passwordToggleEnabled="true"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark">
-                    <EditText
-                        android:id="@+id/confirm_password_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/search_view_background"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="@string/confirm_password"
-                        android:inputType="textPassword"
-                        android:paddingLeft="15dp"
-                        android:paddingEnd="15dp"
-                        android:paddingRight="15dp"
-                        android:textColor="@color/text_color"
-                        android:textSize="15sp"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/confirm_password_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/search_view_background"
+                            android:fontFamily="sans-serif-light"
+                            android:hint="@string/confirm_password"
+                            android:inputType="textPassword"
+                            android:paddingLeft="15dp"
+                            android:paddingEnd="15dp"
+                            android:paddingRight="15dp"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/colorAccent"
+                            android:textSize="15sp"
+                            android:theme="@style/ThemeOverlay.AppCompat.Dark" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="@drawable/signup_custom_bg"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
-                        android:layout_marginBottom="8dp">
-                    <Button
-                        android:id="@+id/normal_sign_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="8dp"
-                        android:text="@string/sign_up"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black" />
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/signup_custom_bg">
+
+                        <Button
+                            android:id="@+id/normal_sign_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="8dp"
+                            android:text="@string/sign_up"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/black" />
                     </FrameLayout>
 
                     <com.shobhitpuri.custombuttons.GoogleSignInButton
@@ -266,46 +278,47 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="@drawable/fb_background_button"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:layout_marginBottom="8dp"
-                        >
-                    <Button
-                        android:id="@+id/fb_login_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:drawableStart="@drawable/ic_facebook_white"
-                        android:drawableLeft="@drawable/ic_facebook_white"
-                        android:padding="8dp"
-                        android:text="@string/sign_up_with_facebook"
-                        android:textAllCaps="false"
-                        android:textColor="@color/text_color" />
+                        android:background="@drawable/fb_background_button">
+
+                        <Button
+                            android:id="@+id/fb_login_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/ic_facebook_white"
+                            android:drawableLeft="@drawable/ic_facebook_white"
+                            android:focusable="true"
+                            android:padding="8dp"
+                            android:text="@string/sign_up_with_facebook"
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_color" />
                     </FrameLayout>
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="@drawable/twitter_background_button"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
-                        android:layout_marginBottom="8dp">
-                    <Button
-                        android:id="@+id/twitter_login_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:drawableStart="@drawable/ic_twitter_white"
-                        android:drawableLeft="@drawable/ic_twitter_white"
-                        android:padding="8dp"
-                        android:text="@string/sign_up_with_twitter"
-                        android:textColor="@color/text_color"
-                        android:textAllCaps="false" />
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/twitter_background_button">
+
+                        <Button
+                            android:id="@+id/twitter_login_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/ic_twitter_white"
+                            android:drawableLeft="@drawable/ic_twitter_white"
+                            android:focusable="true"
+                            android:padding="8dp"
+                            android:text="@string/sign_up_with_twitter"
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_color" />
                     </FrameLayout>
 
                     <TextView

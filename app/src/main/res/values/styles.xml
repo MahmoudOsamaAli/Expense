@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,6 +10,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:colorControlHighlight">@color/text_color</item>
     </style>
+
     <style name="launcher" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -23,7 +25,10 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
+
     <style name="log_in_buttons">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

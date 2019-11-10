@@ -64,35 +64,57 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void bottomNavConfig() {
-        navView.setOnNavigationItemSelectedListener(menuItem -> {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT);
-            switch (menuItem.getItemId()) {
-                case R.id.navigation_home:
-                    if (currFragment instanceof HomeFragment) {
+        try {
+            navView.setOnNavigationItemSelectedListener(menuItem -> {
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT);
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_home:
+                        try {
+                            if (currFragment instanceof HomeFragment) {
+                                break;
+                            } else {
+                                setFragments(new HomeFragment(), AnimationStates.LEFT_TO_RIGHT);
+                                break;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    case R.id.navigation_notifications:
+                        try {
+                            if (currFragment instanceof NotificationsFragment) break;
+                            if (fragment instanceof HomeFragment)
+                                setFragments(new NotificationsFragment(), AnimationStates.RIGHT_TO_LEFT);
+                            else
+                                setFragments(new NotificationsFragment(), AnimationStates.LEFT_TO_RIGHT);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
-                    } else {
-                        setFragments(new HomeFragment(), AnimationStates.LEFT_TO_RIGHT);
+                    case R.id.navigation_favorite:
+                        try {
+                            if (currFragment instanceof FavoriteFragment) break;
+                            if (fragment instanceof ProfileFragment)
+                                setFragments(new FavoriteFragment(), AnimationStates.LEFT_TO_RIGHT);
+                            else
+                                setFragments(new FavoriteFragment(), AnimationStates.RIGHT_TO_LEFT);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
-                    }
-                case R.id.navigation_notifications:
-                    if(currFragment instanceof NotificationsFragment) break;
-                    if (fragment instanceof HomeFragment)
-                        setFragments(new NotificationsFragment(), AnimationStates.RIGHT_TO_LEFT);
-                    else setFragments(new NotificationsFragment(), AnimationStates.LEFT_TO_RIGHT);
-                    break;
-                case R.id.navigation_favorite:
-                    if(currFragment instanceof FavoriteFragment) break;
-                    if (fragment instanceof ProfileFragment)
-                        setFragments(new FavoriteFragment(), AnimationStates.LEFT_TO_RIGHT);
-                    else setFragments(new FavoriteFragment(), AnimationStates.RIGHT_TO_LEFT);
-                    break;
-                case R.id.navigation_profile:
-                    if(currFragment instanceof ProfileFragment) break;
-                    setFragments(new ProfileFragment(), AnimationStates.RIGHT_TO_LEFT);
-                    break;
-            }
-            return true;
-        });
+                    case R.id.navigation_profile:
+                        try {
+                            if (currFragment instanceof ProfileFragment) break;
+                            setFragments(new ProfileFragment(), AnimationStates.RIGHT_TO_LEFT);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                return true;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -105,15 +127,15 @@ public class HomeActivity extends AppCompatActivity {
             AnimationStates states = AnimationStates.BOTTOM_TO_TOP;
             switch (menuItem.getItemId()) {
                 case R.id.add_project_nav:
-                    if(currFragment instanceof AddProjectFragment) break;
+                    if (currFragment instanceof AddProjectFragment) break;
                     setFragments(new AddProjectFragment(), states);
                     break;
                 case R.id.about_us_nav:
-                    if(currFragment instanceof AboutUsFragment) break;
+                    if (currFragment instanceof AboutUsFragment) break;
                     setFragments(new AboutUsFragment(), states);
                     break;
                 case R.id.contact_us_nav:
-                    if(currFragment instanceof ContactUsFragment) break;
+                    if (currFragment instanceof ContactUsFragment) break;
                     setFragments(new ContactUsFragment(), states);
                     break;
                 case R.id.sign_out:
@@ -127,21 +149,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setFragments(Fragment fragment, AnimationStates state) {
-        currFragment = fragment;
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (state == AnimationStates.RIGHT_TO_LEFT)
-            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        try {
+            currFragment = fragment;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (state == AnimationStates.RIGHT_TO_LEFT)
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
 
-        else if (state == AnimationStates.LEFT_TO_RIGHT)
-            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+            else if (state == AnimationStates.LEFT_TO_RIGHT)
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
 
-        else if (state == AnimationStates.BOTTOM_TO_TOP)
-            transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+            else if (state == AnimationStates.BOTTOM_TO_TOP)
+                transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
 
-        transaction.replace(R.id.fragment_container, fragment, TAG_FRAGMENT);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
+            transaction.replace(R.id.fragment_container, fragment, TAG_FRAGMENT);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
