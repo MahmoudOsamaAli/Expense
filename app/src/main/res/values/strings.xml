@@ -55,5 +55,6 @@
     <string name="sign_up_with_facebook">Sign up with facebook</string>
     <string name="sign_up_with_twitter">Sign up with twitter</string>
     <string name="back">back</string>
+    <string name="gender_text">Male</string>
 
 </resources>

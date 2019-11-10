@@ -26,7 +26,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -34,6 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +44,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.OAuthProvider;
 
 import java.util.Arrays;
 
@@ -60,9 +61,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.rellay1)
     LinearLayout rellay1;
-
-    @BindView(R.id.progerss_bar)
-    ProgressBar progressBar;
 
     @BindView(R.id.rellay2)
     LinearLayout rellay2;
@@ -203,64 +201,151 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     .requestIdToken(getString(R.string.web_client_id))
                     .requestEmail()
                     .build();
+            Log.i(TAG, "startSignWithGoogle: got gso " + gso);
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+            Log.i(TAG, "startSignWithGoogle: got google sign in client" + mGoogleSignInClient);
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            Log.i(TAG, "startSignWithGoogle: start make an intent");
             startActivityForResult(signInIntent, RC_SIGN_IN);
+            Log.i(TAG, "startSignWithGoogle: now start activity for result");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void startSignInWithFB() {
-        try {
-            mCallbackManager = CallbackManager.Factory.create();
-            LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile"));
-            LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                    handleAccessToken(loginResult.getAccessToken(), null);
-                }
+            try {
+                mCallbackManager = CallbackManager.Factory.create();
+                Log.i(TAG, "startSignInWithFB: init call back manager");
+                LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile"));
+                Log.i(TAG, "startSignInWithFB: setting permissions to LoginManager  like email and profile");
+                LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.i(TAG, "register callback  facebook:onSuccess:" + loginResult);
+                        handleAccessTokenFB(loginResult.getAccessToken());
+                        Log.i(TAG, "register callback onSuccess: calling method handleAccessTokenFB with a null GoogleSignInAccount");
+                    }
 
-                @Override
-                public void onCancel() {
-                    Log.d(TAG, "facebook:onCancel");
-                }
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                    }
 
-                @Override
-                public void onError(FacebookException error) {
-                    Log.d(TAG, "facebook:onError", error);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleAccessToken(AccessToken token, GoogleSignInAccount acct) {
-        try {
-            Log.d(TAG, "handleAccessToken:" + token);
-            if (acct == null) {
-                AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-                getCredential(credential);
-            } else {
-                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-                getCredential(credential);
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.i(TAG, "facebook:onError", error);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+
+    private void startSignInWithTwitter() {
+        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+        Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
+        if (pendingResultTask != null) {
+            // There's something already here! Finish the sign-in for your user.
+            pendingResultTask
+                    .addOnSuccessListener(
+                            new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    // User is signed in.
+                                    // IdP data available in
+                                    // authResult.getAdditionalUserInfo().getProfile().
+                                    // The OAuth access token can also be retrieved:
+                                    // authResult.getCredential().getAccessToken().
+                                    // The OAuth secret can be retrieved by calling:
+                                    // authResult.getCredential().getSecret().
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle failure.
+                                    Toast.makeText(SignInActivity.this, "Twitter Authentication has failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+        } else {
+            // There's no pending result so you need to start the sign-in flow.
+            // See below.
+            mAuth
+                    .startActivityForSignInWithProvider(/* activity= */ this, provider.build())
+                    .addOnSuccessListener(
+                            new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    // User is signed in.
+                                    // IdP data available in
+                                    // authResult.getAdditionalUserInfo().getProfile().
+                                    // The OAuth access token can also be retrieved:
+                                    // authResult.getCredential().getAccessToken().
+                                    // The OAuth secret can be retrieved by calling:
+                                    // authResult.getCredential().getSecret().
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle failure.
+                                    Toast.makeText(SignInActivity.this, "Twitter Authentication has failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+        }
+    }
+
+    private void handleAccessTokenFB(AccessToken token) {
+        try {
+            Log.i(TAG, "handleAccessTokenFB: acct = " + token);
+            AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+            Log.i(TAG, "handleAccessTokenFB: getting credential for Facebook login" + credential);
+            getCredentialWithFB(credential);
+            Log.i(TAG, "handleAccessTokenFB: calling getCredential ");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void getCredential(AuthCredential credential) {
+    private void handleAccessTokenGoogle(GoogleSignInAccount acct) {
+        try {
+            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            Log.i(TAG, "handleAccessTokenFB: getting credential for google login" + credential);
+            getCredentialWithGoogle(credential);
+            Log.i(TAG, "handleAccessTokenFB: calling getCredential ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getCredentialWithFB(AuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithCredential:success");
+                        Log.i(TAG, "signInWithCredential:success");
                         startActivity(new Intent(SignInActivity.this, HomeActivity.class));
                         finish();
                     } else {
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Log.i(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    private void getCredentialWithGoogle(AuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.i(TAG, "signInWithCredential:success");
+                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                        finish();
+                    } else {
+                        Log.i(TAG, "signInWithCredential:failure", task.getException());
                         Toast.makeText(SignInActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -271,43 +356,35 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-
             if (requestCode == RC_SIGN_IN) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                task.addOnSuccessListener(new OnSuccessListener<GoogleSignInAccount>() {
-                    @Override
-                    public void onSuccess(GoogleSignInAccount googleSignInAccount) {
-                        Log.i(TAG, "GoogleSignIn onSuccess(): is called");
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<GoogleSignInAccount>() {
-                    @Override
-                    public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                        Log.i(TAG, "GoogleSignIn onComplete(): is called");
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i(TAG, "GoogleSignIn onFailure(): is called");
-                        e.printStackTrace();
-                    }
-                });
-
+                task.addOnSuccessListener(googleSignInAccount ->
+                        Log.i(TAG, "GoogleSignIn onSuccess(): is called"))
+                        .addOnCompleteListener(task1 ->
+                                Log.i(TAG, "GoogleSignIn onComplete(): is called")).
+                        addOnFailureListener(e -> {
+                            Log.i(TAG, "GoogleSignIn onFailure(): is called");
+                            e.printStackTrace();
+                        });
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account != null) {
-                    handleAccessToken(null, account);
+                    handleAccessTokenGoogle(account);
+                    Log.i(TAG, "onActivityResult: calling handleAccessTokenFB for google sign in " + account);
                 } else {
                     Toast.makeText(this, "account is null", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (ApiException e) {
             // Google Sign In failed, update UI appropriately
+            e.printStackTrace();
             Log.w(TAG, "Google sign in failed", e);
             Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show();
         }
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if(mCallbackManager != null){
+            boolean b = mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            Log.i(TAG, "onActivityResult: calling mCallBackManager "+b);
+        }
     }
-
 
     @Override
     public void onStart() {
@@ -327,7 +404,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.log_in_button:
-//                startActivity(new Intent(SignInActivity.this, HomeActivity.class));
                 startNormalLogin();
                 break;
             case R.id.txt_sign_up:
@@ -338,16 +414,21 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.sign_google_button:
                 startSignWithGoogle();
+                break;
             case R.id.fb_login_button:
                 startSignInWithFB();
+                break;
             case R.id.normal_sign_button:
                 startNormalSignUp();
+                break;
+            case R.id.twitter_login_button:
+                startSignInWithTwitter();
+                break;
         }
     }
 
     private void startNormalLogin() {
         try {
-
             if (mEmailLoginET.getText() == null || mEmailLoginET.getText().toString().isEmpty()) {
                 mEmailLoginET.setError(getString(R.string.required));
             } else if (mPasswordLoginET.getText() == null || mPasswordLoginET.getText().toString().isEmpty()) {
@@ -377,14 +458,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                             Toast.LENGTH_SHORT).show();
                                     updateUI(null);
                                 }
-
-                                // ...
                             }
                         });
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void startNormalSignUp() {
@@ -424,8 +504,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                             Toast.LENGTH_SHORT).show();
                                     updateUI(null);
                                 }
-
-                                // ...
                             }
                         });
 

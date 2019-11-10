@@ -5,7 +5,6 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiant_background"
     tools:context=".view.activities.signInUp.SignInActivity">
 
     <ScrollView
@@ -26,16 +25,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <ProgressBar
-                android:id="@+id/progerss_bar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/logo"
@@ -111,10 +100,19 @@
                     android:theme="@style/ThemeOverlay.AppCompat.Dark" />
             </com.google.android.material.textfield.TextInputLayout>
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/colorAccent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp">
                 <Button
                     android:id="@+id/log_in_button"
                     style="@style/log_in_buttons"
                     android:text="@string/login_now" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/txt_sign_up"
@@ -134,7 +132,7 @@
                 android:id="@+id/rellay2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo">
@@ -235,18 +233,25 @@
                         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/signup_custom_bg"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="8dp">
                     <Button
                         android:id="@+id/normal_sign_button"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="3dp"
-                        android:background="@drawable/signup_custom_bg"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:padding="8dp"
                         android:text="@string/sign_up"
                         android:textAllCaps="false"
-                        android:textColor="@color/text_color" />
+                        android:textColor="@android:color/black" />
+                    </FrameLayout>
 
                     <com.shobhitpuri.custombuttons.GoogleSignInButton
                         android:id="@+id/sign_google_button"
@@ -258,39 +263,55 @@
                         android:text="@string/continue_with_google"
                         app:isDarkTheme="false" />
 
-                    <Button
-                        android:id="@+id/fb_login_button"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:background="@drawable/fb_background_button"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/fb_background_button"
+                        >
+                    <Button
+                        android:id="@+id/fb_login_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:drawableStart="@drawable/ic_facebook_white"
                         android:drawableLeft="@drawable/ic_facebook_white"
                         android:padding="8dp"
                         android:text="@string/sign_up_with_facebook"
                         android:textAllCaps="false"
                         android:textColor="@color/text_color" />
+                    </FrameLayout>
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/twitter_background_button"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="8dp">
                     <Button
                         android:id="@+id/twitter_login_button"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:background="@drawable/twitter_background_button"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:drawableStart="@drawable/ic_twitter_white"
                         android:drawableLeft="@drawable/ic_twitter_white"
                         android:padding="8dp"
                         android:text="@string/sign_up_with_twitter"
+                        android:textColor="@color/text_color"
                         android:textAllCaps="false" />
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/tv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
                         android:drawableStart="@drawable/ic_arrow_left"
