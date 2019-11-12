@@ -31,7 +31,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_mode_edit_white_24dp"
+            android:src="@drawable/ic_photo_camera"
             android:elevation="12dp"
             android:padding="8dp"
             android:background="@drawable/profile_circular_border_imageview"
