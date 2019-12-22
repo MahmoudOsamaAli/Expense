@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
 import com.example.expense.adapters.SelectedCategoryAdapter;
-import com.example.expense.data.Data;
+import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.pojo.RestaurantModel;
 
 import java.util.ArrayList;
@@ -44,9 +44,9 @@ public class FavoriteFragment extends Fragment implements FavoritesView{
 
     @Override
     public void onGetFavoriteData(ArrayList<RestaurantModel> list) {
-        setmRV(list);
+//        setmRV(list);
     }
-    private void setmRV(ArrayList<RestaurantModel> list){
+    private void setmRV(ArrayList<PlaceModel> list){
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRV.setLayoutManager(manager);
         SelectedCategoryAdapter adapter = new SelectedCategoryAdapter(getContext() , list);

@@ -12,17 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
+import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.activities.placeDetails.PlaceDetails;
-import com.example.expense.pojo.RestaurantModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCategoryAdapter.MyHolder> {
 
     private Context mContext;
-    private ArrayList<RestaurantModel> data;
+    private ArrayList<PlaceModel> data;
 
-    public SelectedCategoryAdapter(Context mContext, ArrayList<RestaurantModel> data) {
+    public SelectedCategoryAdapter(Context mContext, ArrayList<PlaceModel> data) {
         this.mContext = mContext;
         this.data = data;
     }
@@ -37,8 +38,13 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holder.mName.setText(data.get(position).getmName());
-        holder.mImage.setImageResource(data.get(position).getmImage());
+        try {
+            holder.mName.setText(data.get(position).getName());
+            holder.mDescriptionTV.setText(data.get(position).getDescription());
+            Picasso.get().load(data.get(position).getImagesURL().get(0)).into(holder.mImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -46,16 +52,25 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
         return data.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder{
-        TextView mName;
+    class MyHolder extends RecyclerView.ViewHolder {
+        TextView mName, mDescriptionTV;
         ImageView mImage;
 
         MyHolder(@NonNull View itemView) {
             super(itemView);
-            mName = itemView.findViewById(R.id.place_name);
-            mImage = itemView.findViewById(R.id.place_image);
-            itemView.setOnClickListener(v ->
-                    mContext.startActivity(new Intent(mContext , PlaceDetails.class)));
+            try {
+                mName = itemView.findViewById(R.id.place_name);
+                mImage = itemView.findViewById(R.id.place_image);
+                mDescriptionTV = itemView.findViewById(R.id.description_preview);
+
+                itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(mContext, PlaceDetails.class);
+                    intent.putExtra(mContext.getString(R.string.place_intent_lbl), data.get(getAdapterPosition()));
+                    mContext.startActivity(intent);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"
         app:queryHint="Search Here"
-        app:searchIcon="@drawable/ic_search_black_24dp" />
+        app:searchIcon="@drawable/ic_search_white_24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_RV"

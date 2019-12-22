@@ -54,14 +54,12 @@ public class RVHomeAdapter extends RecyclerView.Adapter<RVHomeAdapter.MyHolder> 
             super(itemView);
             mText = itemView.findViewById(R.id.category_text);
             mImage = itemView.findViewById(R.id.category_image);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String label = mText.getText().toString();
-                    Intent i = new Intent(mContext , SelectedCategory.class);
-                    i.putExtra("label" , label);
-                    mContext.startActivity(i);
-                }
+            itemView.setOnClickListener(view -> {
+
+                String label = mText.getText().toString();
+                Intent i = new Intent(mContext , SelectedCategory.class);
+                i.putExtra("label" , label);
+                mContext.startActivity(i);
             });
         }
     }

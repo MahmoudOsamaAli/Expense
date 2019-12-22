@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
 import com.example.expense.adapters.SelectedCategoryAdapter;
-import com.example.expense.data.Data;
+import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.pojo.RestaurantModel;
 
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ public class NotificationsFragment extends Fragment implements NotificationsView
     }
     @Override
     public void onGetNotifications(ArrayList<RestaurantModel> data) {
-        RVConfig(data);
+//        RVConfig(data);
     }
-    private void RVConfig(ArrayList<RestaurantModel> data) {
+    private void RVConfig(ArrayList<PlaceModel> data) {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRV.setLayoutManager(manager);
         SelectedCategoryAdapter adapter = new SelectedCategoryAdapter(getContext(), data);

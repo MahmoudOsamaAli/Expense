@@ -59,4 +59,19 @@
     <string name="search_hint">type your search request</string>
     <string name="search_title">Search</string>
 
+    <string name="category">Category</string>
+    <string name="coffee">Cafe</string>
+    <string name="electronics">Electronics</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="clothes">Clothes</string>
+    <string name="beauty">Beauty</string>
+    <string name="others">Others</string>
+    <string name="place_name_test">Garden city Cafe</string>
+    <string name="description_test">A nice place to visit and hangout with friends where you can enjoy cool music and great coffee</string>
+    <string name="more">Read more</string>
+    <string name="place_intent_lbl">place</string>
+    <string name="oops_wait_for_more_places_to_visit">wait for more places to visit</string>
+    <string name="edit_place_nav_lbl">Edit Place</string>
+    <string name="mile">mile</string>
+
 </resources>
