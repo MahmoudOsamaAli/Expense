@@ -134,7 +134,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             setContentView(R.layout.activity_sign_in);
             ButterKnife.bind(this);
-            handler.postDelayed(runnable1, 3000);
+//            handler.postDelayed(runnable1, 3000);
             init();
         } catch (Exception e) {
             e.printStackTrace();
@@ -342,7 +342,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.i(TAG, "signInWithCredential:success");
-                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                        String m = "message";
+                        Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                        i.putExtra("message", m);
+                        startActivity(i);
                         finish();
                     } else {
                         Log.i(TAG, "signInWithCredential:failure", task.getException());
@@ -392,11 +395,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+            String m = "message";
+            Intent i = new Intent("com.example.expense.view.activities.Home.HomeActivity");
+            i.putExtra("message", m);
+            startActivity(i);
             finish();
             Toast.makeText(this, "you are logged in", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "sign in please", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -518,9 +522,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             if (user != null) {
                 //TODO save user data into shared preferences
-
+                String m = "message";
+                Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                i.putExtra("message", m);
+                startActivity(i);
                 // Start home activity
-                startActivity(new Intent(SignInActivity.this, HomeActivity.class));
                 finish();
             }
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NotificationsFragment extends Fragment implements NotificationsView{
+public class NotificationsFragment extends Fragment {
 
     @BindView(R.id.RV_notification_fragment)
     RecyclerView mRV;
@@ -41,13 +41,9 @@ public class NotificationsFragment extends Fragment implements NotificationsView
     }
 
     private void init() {
-        NotificationsPresenter presenter = new NotificationsPresenter(this);
-        presenter.getNotifications();
+//        NotificationsPresenter presenter = new NotificationsPresenter(this);
+//        presenter.getNotifications();
         searchViewConfig();
-    }
-    @Override
-    public void onGetNotifications(ArrayList<RestaurantModel> data) {
-//        RVConfig(data);
     }
     private void RVConfig(ArrayList<PlaceModel> data) {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());

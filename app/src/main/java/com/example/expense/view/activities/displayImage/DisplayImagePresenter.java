@@ -1,9 +1,5 @@
 package com.example.expense.view.activities.displayImage;
 
-import com.example.expense.data.Data;
-import com.example.expense.pojo.PlaceImage;
-
-import java.util.ArrayList;
 
 class DisplayImagePresenter {
 
@@ -13,10 +9,10 @@ class DisplayImagePresenter {
         this.view = view;
     }
 
-    private ArrayList<PlaceImage> getImagesList(){
-        return Data.getPlaceImages();
-    }
-    void getList(){
-        view.onGetImages(getImagesList());
-    }
+//    private ArrayList<PlaceImage> getImagesList(){
+
+//    }
+//    void getList(){
+//        view.onGetImages(getImagesList());
+//    }
 }

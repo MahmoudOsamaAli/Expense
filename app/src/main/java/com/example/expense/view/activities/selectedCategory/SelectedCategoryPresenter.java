@@ -3,12 +3,10 @@ package com.example.expense.view.activities.selectedCategory;
 import android.content.Context;
 
 import com.example.expense.configs.App;
-import com.example.expense.data.Data;
 import com.example.expense.data.firebase.PlaceFirebaseProcess;
 import com.example.expense.data.firebase.callbacks.PlaceFirebaseListener;
 import com.example.expense.data.sqllite.DBProcess;
 import com.example.expense.pojo.Model.PlaceModel;
-import com.example.expense.pojo.RestaurantModel;
 
 import java.util.ArrayList;
 
@@ -20,22 +18,10 @@ class SelectedCategoryPresenter implements PlaceFirebaseListener {
     private PlaceFirebaseProcess placeFBProcess;
     private DBProcess dbProcess;
 
-    SelectedCategoryPresenter(SelectedCategoryView viewCallback) {
-        this.viewCallback = viewCallback;
-    }
-
-    private ArrayList<RestaurantModel> getCategoryList(){
-        return Data.getSelectedCategoryData();
-    }
-
     SelectedCategoryPresenter(SelectedCategoryView listener, Context context) {
         this.viewCallback = listener;
         this.context = context;
         this.dbProcess = new DBProcess(this.context);
-    }
-
-    public SelectedCategoryPresenter(Context context) {
-        this.context = context;
     }
 
     void readPlaceByCategoryFromFireStore(String category) {

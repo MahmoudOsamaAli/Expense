@@ -337,7 +337,7 @@
         android:clickable="true"
         android:elevation="@dimen/_4sdp"
         android:focusable="true"
-        android:src="@drawable/ic_call_black_24dp"
+        android:src="@drawable/ic_call_white_24dp"
         app:layout_anchor="@id/place_details_place_app_bar"
         app:layout_anchorGravity="bottom|end"
         tools:targetApi="lollipop"

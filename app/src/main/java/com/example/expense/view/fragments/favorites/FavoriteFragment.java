@@ -21,11 +21,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoriteFragment extends Fragment implements FavoritesView{
+public class FavoriteFragment extends Fragment {
 
     @BindView(R.id.RV_favorite_fragment)
     RecyclerView mRV;
-    private FavoritesPresenter presenter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorite , container, false);
@@ -38,14 +37,10 @@ public class FavoriteFragment extends Fragment implements FavoritesView{
     }
 
     private void init() {
-        presenter = new FavoritesPresenter(this);
-        presenter.getFavorites();
+//        presenter = new FavoritesPresenter(this);
+//        presenter.getFavorites();
     }
 
-    @Override
-    public void onGetFavoriteData(ArrayList<RestaurantModel> list) {
-//        setmRV(list);
-    }
     private void setmRV(ArrayList<PlaceModel> list){
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRV.setLayoutManager(manager);

@@ -78,8 +78,18 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         try {
-            if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            String m = null;
+            if (extras != null) {
+                m = extras.getString("message");
+                //get the value based on the key
+            }
+            Log.i(TAG, "onCreate: intent has string " + m);
+            if (savedInstanceState == null && m == null) {
                 setFragments(new HomeFragment(), AnimationStates.BOTTOM_TO_TOP);
+            }else if(m != null){
+                setFragments(new ProfileFragment(), AnimationStates.BOTTOM_TO_TOP);
+//                navView.setSelectedItemId(R.id.navigation_profile);
             }
 
             initLocation();
@@ -239,7 +249,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
 
                     case R.id.sign_out:
                         FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(HomeActivity.this, SignInActivity.class));
+//                        startActivity(new Intent(HomeActivity.this, SignInActivity.class));
                         break;
 
                 }
@@ -295,6 +305,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             transaction.replace(R.id.fragment_container, fragment, TAG_FRAGMENT);
             transaction.addToBackStack(null);
             transaction.commit();
+            Log.i(TAG, "setFragments: fragment tag = " + TAG_FRAGMENT);
         } catch (Exception e) {
             e.printStackTrace();
         }

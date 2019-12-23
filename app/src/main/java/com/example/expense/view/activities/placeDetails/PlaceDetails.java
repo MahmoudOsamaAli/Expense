@@ -33,11 +33,8 @@ import com.example.expense.adapters.LocationAdapter;
 import com.example.expense.adapters.MyPagerAdapter;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
-import com.example.expense.pojo.PlaceImage;
-import com.example.expense.pojo.locationModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mancj.slimchart.SlimChart;
@@ -183,9 +180,9 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
 
             presenter = new PlaceDetailsPresenter(this);
-            presenter.getLocationsList();
-            presenter.getPlaceImagesList();
-            presenter.getRatings();
+//            presenter.getLocationsList();
+//            presenter.getPlaceImagesList();
+//            presenter.getRatings();
             presenter.getChartRating();
 
             mCallFab.setOnClickListener(mCurrent);
@@ -306,10 +303,6 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        if (item.getItemId() == R.id.place_details_edit_item_menu) {
-//              editPlace();
-//            return true;
-//        } else
             if (item.getItemId() == R.id.place_details_favorite_item_menu) {
             handleFavorite(item);
         } else if (item.getItemId() == android.R.id.home) {
@@ -322,7 +315,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
         try {
             if (!favorite) {
                 favorite = true;
-                item.setIcon(R.drawable.ic_favorite_pink_24dp);
+                item.setIcon(R.drawable.ic_favorite_fill_white_24dp);
             } else {
                 favorite = false;
                 item.setIcon(R.drawable.ic_favorite_border_white_24dp);
@@ -358,21 +351,6 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onGetLocations(ArrayList<locationModel> list) {
-
-    }
-
-    @Override
-    public void onGetPlaceImages(ArrayList<PlaceImage> list) {
-
-    }
-
-    @Override
-    public void onGetSeekBarRating(ArrayList<Integer> list) {
-
     }
 
     @Override

@@ -1,9 +1,5 @@
 package com.example.expense.view.fragments.favorites;
 
-import com.example.expense.data.Data;
-import com.example.expense.pojo.RestaurantModel;
-
-import java.util.ArrayList;
 
 public class FavoritesPresenter {
 
@@ -13,10 +9,10 @@ public class FavoritesPresenter {
         this.view = view;
     }
 
-    private ArrayList<RestaurantModel> getFavoriteFromDatabase(){
-        return Data.getSelectedCategoryData();
-    }
-    void getFavorites(){
-        view.onGetFavoriteData(getFavoriteFromDatabase());
-    }
+//    private ArrayList<RestaurantModel> getFavoriteFromDatabase(){
+
+//    }
+//    void getFavorites(){
+//        view.onGetFavoriteData(getFavoriteFromDatabase());
+//    }
 }

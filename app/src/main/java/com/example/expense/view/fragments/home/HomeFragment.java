@@ -9,12 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
-import com.example.expense.data.Data;
 import com.example.expense.pojo.HomeViewModel;
 import com.example.expense.adapters.RVHomeAdapter;
 import com.example.expense.view.activities.Home.HomeActivity;
@@ -25,13 +23,12 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment implements HomeView{
+public class HomeFragment extends Fragment {
 
     @BindView(R.id.categories_RV)
     RecyclerView mRV;
     @BindView(R.id.search_view_fragment)
     SearchView mSearchView;
-    private HomePresenter presenter;
     private HomeActivity mCurrent;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,9 +42,7 @@ public class HomeFragment extends Fragment implements HomeView{
     }
 
     private void init() {
-        presenter = new HomePresenter(this);
         mCurrent = (HomeActivity) getActivity();
-        presenter.getCategoriesData();
         searchViewConfig();
         ArrayList<HomeViewModel> list = createHomeViewList();
         RVConfig(list);
@@ -77,10 +72,6 @@ public class HomeFragment extends Fragment implements HomeView{
         return data;
     }
 
-    @Override
-    public void onGetCategories(ArrayList<HomeViewModel> list) {
-        RVConfig(list);
-    }
     private void RVConfig(ArrayList<HomeViewModel> data) {
         LinearLayoutManager manager = new LinearLayoutManager(mCurrent);
         mRV.setLayoutManager(manager);
