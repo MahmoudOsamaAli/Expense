@@ -5,11 +5,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
     android:background="?android:attr/selectableItemBackground"
+    app:cardElevation="@dimen/_4sdp"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="@dimen/_4sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/_8sdp">

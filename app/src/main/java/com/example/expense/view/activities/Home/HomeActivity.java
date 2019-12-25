@@ -2,21 +2,15 @@ package com.example.expense.view.activities.Home;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.TextView;
 
 import com.example.expense.R;
-import com.example.expense.data.firebase.PlaceFirebaseProcess;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
-import com.example.expense.view.activities.signInUp.SignInActivity;
 import com.example.expense.view.fragments.home.HomeFragment;
 import com.example.expense.view.fragments.aboutUs.AboutUsFragment;
 import com.example.expense.view.fragments.addProject.AddProjectFragment;
@@ -24,11 +18,9 @@ import com.example.expense.view.fragments.contactUs.ContactUsFragment;
 import com.example.expense.view.fragments.favorites.FavoriteFragment;
 import com.example.expense.view.fragments.notifications.NotificationsFragment;
 import com.example.expense.view.fragments.profile.ProfileFragment;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -61,20 +52,18 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
     @BindView(R.id.bottom_nav_view)
     BottomNavigationView navView;
 
-    TextView requestsCount;
     private Fragment currFragment;
     private final static String TAG = "HomeActivity";
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
-    PlaceFirebaseProcess placeFirebaseProcess;
     public HomeActivity mCurrent;
 
-    ArrayList<PlaceModel> places;
     private HomeActivityPresenter presenter;
     private FusedLocationProviderClient fusedLocationClient;
     public Location mCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         try {
@@ -105,13 +94,10 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                mCurrentLocation = location;
-                            }
+                    .addOnSuccessListener(this, location -> {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            mCurrentLocation = location;
                         }
                     });
         } catch (Exception e) {
@@ -273,18 +259,6 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
         if (actionBar != null) {
             actionBar.setTitle(title);
 
-        }
-    }
-
-    private void initializeRequestCountDrawer() {
-        try {
-            requestsCount.setGravity(Gravity.CENTER_VERTICAL);
-            requestsCount.setTypeface(null, Typeface.BOLD);
-            requestsCount.setTextColor(getResources().getColor(R.color.red));
-            requestsCount.setText("99+");
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

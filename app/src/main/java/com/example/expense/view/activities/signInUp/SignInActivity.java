@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,11 +57,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private GoogleSignInClient mGoogleSignInClient;
     CallbackManager mCallbackManager;
 
-    @BindView(R.id.rellay1)
-    LinearLayout rellay1;
+    @BindView(R.id.login_layout)
+    LinearLayout loginLayout;
 
-    @BindView(R.id.rellay2)
-    LinearLayout rellay2;
+    @BindView(R.id.sign_up_layout)
+    LinearLayout signUpLayout;
 
     @BindView(R.id.log_in_button)
     Button logInButton;
@@ -105,24 +103,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     Button mNormalSignUp;
 
     Handler handler = new Handler();
-    Runnable runnable1 = new Runnable() {
+    Runnable runnableLogIn = new Runnable() {
         @Override
         public void run() {
-            rellay1.setVisibility(View.VISIBLE);
+            loginLayout.setVisibility(View.GONE);
+            signUpLayout.setVisibility(View.VISIBLE);
         }
     };
-    Runnable runnable2 = new Runnable() {
+    Runnable runnableSignUp = new Runnable() {
         @Override
         public void run() {
-            rellay1.setVisibility(View.GONE);
-            rellay2.setVisibility(View.VISIBLE);
-        }
-    };
-    Runnable runnable3 = new Runnable() {
-        @Override
-        public void run() {
-            rellay1.setVisibility(View.VISIBLE);
-            rellay2.setVisibility(View.GONE);
+            loginLayout.setVisibility(View.VISIBLE);
+            signUpLayout.setVisibility(View.GONE);
         }
     };
 
@@ -134,7 +126,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             setContentView(R.layout.activity_sign_in);
             ButterKnife.bind(this);
-//            handler.postDelayed(runnable1, 3000);
             init();
         } catch (Exception e) {
             e.printStackTrace();
@@ -326,7 +317,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.i(TAG, "signInWithCredential:success");
-                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                        String m = "message";
+                        Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                        i.putExtra("message", m);
+                        startActivity(i);
                         finish();
                     } else {
                         Log.i(TAG, "signInWithCredential:failure", task.getException());
@@ -395,12 +389,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            String m = "message";
-            Intent i = new Intent("com.example.expense.view.activities.Home.HomeActivity");
-            i.putExtra("message", m);
-            startActivity(i);
+            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
             finish();
-            Toast.makeText(this, "you are logged in", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -411,10 +401,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 startNormalLogin();
                 break;
             case R.id.txt_sign_up:
-                handler.postDelayed(runnable2, 0);
+                handler.postDelayed(runnableLogIn, 0);
                 break;
             case R.id.tv_back:
-                handler.postDelayed(runnable3, 0);
+                handler.postDelayed(runnableSignUp, 0);
                 break;
             case R.id.sign_google_button:
                 startSignWithGoogle();

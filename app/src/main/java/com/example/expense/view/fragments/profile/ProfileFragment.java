@@ -1,6 +1,7 @@
 package com.example.expense.view.fragments.profile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +31,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     @BindView(R.id.user_profile_photo)
     ImageView profileImage;
-    @BindView(R.id.user_profile_name)
+    @BindView(R.id.account_name)
     TextView profileName;
-    @BindView(R.id.user_profile_email)
+    @BindView(R.id.mail)
     TextView profileMail;
-    @BindView(R.id.profile_phone_number)
+    @BindView(R.id.phone_number)
     TextView profilePhoneNumber;
-    @BindView(R.id.profile_country)
+    @BindView(R.id.country_text)
     TextView profileCountry;
     @BindView(R.id.change_photo)
     CircleImageView changePhoto;
@@ -59,30 +60,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private void init() {
         try {
-//            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//            FirebaseUser user = mAuth.getCurrentUser();
-//            String name = null;
-//            String email = null;
-//            String gender = null;
-//            if (user != null) {
-//                name = user.getDisplayName();
-//                email = user.getEmail();
-//                gender = user.getPhoneNumber();
-//                profileName.setText(name);
-//                profileMail.setText(email);
-//
-//            } else {
-//                profileName.setText("");
-//                profileMail.setText("");
-//            }
-//            if (user != null && user.getPhotoUrl() != null)
-//                Picasso.get().load(user.getPhotoUrl().toString()).into(profileImage);
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(FirebaseAuth.getInstance().getCurrentUser() == null){
                 registerLayout.setVisibility(View.VISIBLE);
                 profileContentLayout.setVisibility(View.GONE);
             }else{
                 registerLayout.setVisibility(View.GONE);
                 profileContentLayout.setVisibility(View.VISIBLE);
+                if (user != null) {
+                    String name = user.getDisplayName();
+                    if(name != null) profileName.setText(name);
+                    else profileName.setText("");
+
+                    String email = user.getEmail();
+                    if(email != null) profileMail.setText(email);
+                    else profileMail.setText("");
+
+                    String phoneNumber = user.getPhoneNumber();
+                    if(phoneNumber != null) profilePhoneNumber.setText(phoneNumber);
+                    else profilePhoneNumber.setText("");
+
+                    Uri photoUrl = user.getPhotoUrl();
+                    if(photoUrl != null) Picasso.get().load(photoUrl.toString()).into(profileImage);
+                    else Picasso.get().load(R.drawable.empty_profile_image).into(profileImage);
+                }
             }
             logInButton.setOnClickListener(this);
         } catch (Exception e) {

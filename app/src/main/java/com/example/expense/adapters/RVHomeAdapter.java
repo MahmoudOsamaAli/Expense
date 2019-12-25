@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
@@ -21,6 +24,7 @@ public class RVHomeAdapter extends RecyclerView.Adapter<RVHomeAdapter.MyHolder> 
 
     private Context mContext;
     private ArrayList<HomeViewModel> mData;
+    private int lastPosition = -1;
 
     public RVHomeAdapter(Context mContext, ArrayList<HomeViewModel> mData) {
         this.mContext = mContext;
@@ -39,6 +43,15 @@ public class RVHomeAdapter extends RecyclerView.Adapter<RVHomeAdapter.MyHolder> 
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holder.mText.setText(mData.get(position).getmText());
         holder.mImage.setImageResource(mData.get(position).getmImageId());
+        setAnimation(holder.mImage, position);
+    }
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.zoom_out);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     @Override
@@ -49,9 +62,10 @@ public class RVHomeAdapter extends RecyclerView.Adapter<RVHomeAdapter.MyHolder> 
     class MyHolder extends RecyclerView.ViewHolder {
         TextView mText;
         ImageView mImage;
-
+        ConstraintLayout parent;
         MyHolder(@NonNull View itemView) {
             super(itemView);
+            parent = itemView.findViewById(R.id.parent);
             mText = itemView.findViewById(R.id.category_text);
             mImage = itemView.findViewById(R.id.category_image);
             itemView.setOnClickListener(view -> {

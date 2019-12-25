@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
@@ -22,6 +25,7 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
 
     private Context mContext;
     private ArrayList<PlaceModel> data;
+    private int lastPosition = -1;
 
     public SelectedCategoryAdapter(Context mContext, ArrayList<PlaceModel> data) {
         this.mContext = mContext;
@@ -42,8 +46,17 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
             holder.mName.setText(data.get(position).getName());
             holder.mDescriptionTV.setText(data.get(position).getDescription());
             Picasso.get().load(data.get(position).getImagesURL().get(0)).into(holder.mImage);
+            setAnimation(holder.parent , position);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 
@@ -55,10 +68,12 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
     class MyHolder extends RecyclerView.ViewHolder {
         TextView mName, mDescriptionTV;
         ImageView mImage;
+        ConstraintLayout parent;
 
         MyHolder(@NonNull View itemView) {
             super(itemView);
             try {
+                parent = itemView.findViewById(R.id.parent);
                 mName = itemView.findViewById(R.id.place_name);
                 mImage = itemView.findViewById(R.id.place_image);
                 mDescriptionTV = itemView.findViewById(R.id.description_preview);

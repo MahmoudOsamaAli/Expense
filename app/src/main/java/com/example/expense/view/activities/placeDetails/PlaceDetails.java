@@ -23,20 +23,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
+import com.example.expense.Utilities.AppUtils;
 import com.example.expense.Utilities.NumberUtils;
 import com.example.expense.adapters.LocationAdapter;
 import com.example.expense.adapters.MyPagerAdapter;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
+import com.example.expense.view.activities.signInUp.SignInActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mancj.slimchart.SlimChart;
 
 import java.util.ArrayList;
@@ -304,11 +310,40 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
             if (item.getItemId() == R.id.place_details_favorite_item_menu) {
-            handleFavorite(item);
-        } else if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    handleFavorite(item);
+                } else {
+                    showAlertDialogForRegister();
+                }
+            }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAlertDialogForRegister(){
+        try {
+            MaterialDialog mChooseInputDlg = new MaterialDialog.Builder(mCurrent)
+                    .autoDismiss(false)
+                    .cancelable(false)
+                    .customView(R.layout.register_alert_dialog, false)
+                    .build();
+            mChooseInputDlg.getTitleView().setTextSize(mCurrent.getResources().getDimension(R.dimen._8ssp));
+            if (!mChooseInputDlg.isShowing()) mChooseInputDlg.show();
+            View view = mChooseInputDlg.getCustomView();
+            if (view != null) {
+                ImageView close = view.findViewById(R.id.close_button);
+                Button register = view.findViewById(R.id.log_in_button);
+
+                close.setOnClickListener(e -> {
+                    mChooseInputDlg.dismiss();
+                });
+                register.setOnClickListener(e -> {
+                    startActivity(new Intent(PlaceDetails.this , SignInActivity.class));
+                    mChooseInputDlg.dismiss();
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleFavorite(MenuItem item) {
@@ -324,6 +359,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
             e.printStackTrace();
         }
     }
+
     private void initLocationRV() {
         try {
             Log.i(TAG, "initLocationRV(): is called");
@@ -403,10 +439,21 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (v.equals(mCallFab)) {
-            callPhoneNo();
-        } else if (v.equals(likeImage)) {
-            try {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        switch(id){
+            case R.id.call_fab:
+                if(currentUser != null) {
+                    callPhoneNo();
+                }else{
+                    showAlertDialogForRegister();
+                }
+                break;
+
+            case R.id.like_button :
+                if(currentUser == null){
+                    showAlertDialogForRegister();
+                    break;
+                }
                 if (!liked) {
                     likeImage.setImageResource(R.drawable.ic_sentiment_satisfied_filled_24dp);
                     liked = true;
@@ -419,50 +466,85 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
                 disliked = false;
                 okayImage.setImageResource(R.drawable.ic_sentiment_neutral_black_24dp);
                 dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_24px);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (v.equals(okayImage)) {
-            try {
-                if (!okay) {
-                    okay = true;
-                    okayImage.setImageResource(R.drawable.ic_sentiment_neutral_filled_24dp);
-                } else {
-                    okay = false;
-                    okayImage.setImageResource(R.drawable.ic_sentiment_neutral_black_24dp);
-                }
+                break;
 
-                liked = false;
-                disliked = false;
-                likeImage.setImageResource(R.drawable.ic_sentiment_satisfied_24px);
-                dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_24px);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (v.equals(dislikeImage)) {
-            try {
-                if (!disliked) {
-                    disliked = true;
-                    dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_filled_24dp);
-                } else {
+            case R.id.okay_button:
+                try {
+                    if(currentUser == null){
+                        showAlertDialogForRegister();
+                        break;
+                    }
+                    if (!okay) {
+                        okay = true;
+                        okayImage.setImageResource(R.drawable.ic_sentiment_neutral_filled_24dp);
+                    } else {
+                        okay = false;
+                        okayImage.setImageResource(R.drawable.ic_sentiment_neutral_black_24dp);
+                    }
+
+                    liked = false;
                     disliked = false;
+                    likeImage.setImageResource(R.drawable.ic_sentiment_satisfied_24px);
                     dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_24px);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                liked = false;
-                okay = false;
-                likeImage.setImageResource(R.drawable.ic_sentiment_satisfied_24px);
-                okayImage.setImageResource(R.drawable.ic_sentiment_neutral_black_24dp);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (v.equals(mFacebookIV)) {
-            handleFacebookIV();
-        } else if (v.equals(mTwitterIV)) {
-            handleTwitterIV();
-        } else if (v.equals(mWebsiteIV)) {
-            handleWebsiteIV();
-        } else if (v.equals(mInstagramIV)) {
-            handleInstagramIV();
+                break;
+
+            case R.id.dislike_button:
+                try {
+                    if(currentUser == null){
+                        showAlertDialogForRegister();
+                        break;
+                    }
+                    if (!disliked) {
+                        disliked = true;
+                        dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_filled_24dp);
+                    } else {
+                        disliked = false;
+                        dislikeImage.setImageResource(R.drawable.ic_sentiment_dissatisfied_24px);
+                    }
+                    liked = false;
+                    okay = false;
+                    likeImage.setImageResource(R.drawable.ic_sentiment_satisfied_24px);
+                    okayImage.setImageResource(R.drawable.ic_sentiment_neutral_black_24dp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case R.id.place_details_activity_facebook :
+                if(currentUser == null){
+                    showAlertDialogForRegister();
+                    break;
+                }else {
+                    handleFacebookIV();
+                }
+                break;
+            case R.id.place_details_activity_instagram :
+                if(currentUser == null){
+                    showAlertDialogForRegister();
+                    break;
+                }else {
+                    handleInstagramIV();
+                    break;
+                }
+            case R.id.place_details_activity_twitter :
+                if(currentUser == null){
+                    showAlertDialogForRegister();
+                    break;
+                }else {
+                    handleTwitterIV();
+                    break;
+                }
+            case R.id.place_details_activity_web :
+                if(currentUser == null){
+                    showAlertDialogForRegister();
+                    break;
+                }else {
+                    handleWebsiteIV();
+                    break;
+                }
         }
     }
 
@@ -523,17 +605,6 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
             e.printStackTrace();
         }
     }
-
-//    private void editPlace() {
-//        try {
-//            Intent intent = new Intent(mCurrent, EditActivity.class);
-//            intent.putExtra(getString(R.string.place_intent_lbl), place);
-//            startActivity(intent);
-//            finish();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void callPhoneNo() {
         try {
