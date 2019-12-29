@@ -39,6 +39,7 @@ import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.activities.signInUp.SignInActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,9 +52,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.relex.circleindicator.CircleIndicator;
 
-public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView , View.OnClickListener{
+public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView, View.OnClickListener {
 
     private static final int CALL_REQUEST_CODE = 1;
+    private static final int LOCATION_REQUEST_CODE = 2;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
@@ -128,7 +130,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
     private ArrayList<LocationModel> locationModels;
 
     PlaceModel place;
-
+    private LocationAdapter locationAdapter;
     PlaceDetails mCurrent;
     private static final String TAG = "PlaceDetails";
 
@@ -147,20 +149,24 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
     private void initLocation() {
         try {
-            Log.i(TAG, "initLocation: called");
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            mCurrentLocation = location;
-                            Log.i(TAG, "onSuccess: location is not null");
-//                            calcDistances();
-                        }
-                    });
-            Log.i(TAG, "initLocation: out of the task : location = ");
-//            calcDistances();
-            initLocationRV();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mCurrent, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            } else {
+                Log.i(TAG, "initLocation: called");
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(this, location -> {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                mCurrentLocation = location;
+                                Log.i(TAG, "onSuccess: location is not null");
+                                calcDistances();
+                            } else {
+                                Log.i(TAG, "onSuccess: location is null");
+                            }
+                        }).addOnFailureListener(Throwable::printStackTrace);
+                initLocationRV();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.i(TAG, "initLocation: catched an exception" + e.getMessage());
@@ -253,7 +259,11 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
                     Log.i(TAG, "calcDistances(): distance = " + dist);
                 }
             }
-            initLocationRV();
+//            initLocationRV();
+            if (locationAdapter != null) {
+                locationAdapter.notifyDataSetChanged();
+                locationAdapter.notifyDataChanged(distances);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -309,17 +319,17 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            if (item.getItemId() == R.id.place_details_favorite_item_menu) {
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    handleFavorite(item);
-                } else {
-                    showAlertDialogForRegister();
-                }
+        if (item.getItemId() == R.id.place_details_favorite_item_menu) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                handleFavorite(item);
+            } else {
+                showAlertDialogForRegister();
             }
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showAlertDialogForRegister(){
+    private void showAlertDialogForRegister() {
         try {
             MaterialDialog mChooseInputDlg = new MaterialDialog.Builder(mCurrent)
                     .autoDismiss(false)
@@ -337,7 +347,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
                     mChooseInputDlg.dismiss();
                 });
                 register.setOnClickListener(e -> {
-                    startActivity(new Intent(PlaceDetails.this , SignInActivity.class));
+                    startActivity(new Intent(PlaceDetails.this, SignInActivity.class));
                     mChooseInputDlg.dismiss();
                 });
             }
@@ -365,14 +375,9 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
             Log.i(TAG, "initLocationRV(): is called");
             LinearLayoutManager manager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(manager);
-            LocationAdapter adapter = null;
-            if(distances != null) {
-                adapter = new LocationAdapter(this, place.getLocationModels(), distances, place.getName());
-            }else{
-                adapter = new LocationAdapter(this , place.getLocationModels() , place.getName());
-            }
-            Log.i(TAG, "initLocationRV: adapter size = " + adapter.getItemCount());
-            recyclerView.setAdapter(adapter);
+            locationAdapter = new LocationAdapter(this, place.getLocationModels(), distances, place.getName());
+            Log.i(TAG, "initLocationRV: adapter size = " + locationAdapter.getItemCount());
+            recyclerView.setAdapter(locationAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -440,17 +445,17 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
     public void onClick(View v) {
         int id = v.getId();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        switch(id){
+        switch (id) {
             case R.id.call_fab:
-                if(currentUser != null) {
+                if (currentUser != null) {
                     callPhoneNo();
-                }else{
+                } else {
                     showAlertDialogForRegister();
                 }
                 break;
 
-            case R.id.like_button :
-                if(currentUser == null){
+            case R.id.like_button:
+                if (currentUser == null) {
                     showAlertDialogForRegister();
                     break;
                 }
@@ -470,7 +475,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
             case R.id.okay_button:
                 try {
-                    if(currentUser == null){
+                    if (currentUser == null) {
                         showAlertDialogForRegister();
                         break;
                     }
@@ -493,7 +498,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
 
             case R.id.dislike_button:
                 try {
-                    if(currentUser == null){
+                    if (currentUser == null) {
                         showAlertDialogForRegister();
                         break;
                     }
@@ -513,35 +518,35 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
                 }
                 break;
 
-            case R.id.place_details_activity_facebook :
-                if(currentUser == null){
+            case R.id.place_details_activity_facebook:
+                if (currentUser == null) {
                     showAlertDialogForRegister();
                     break;
-                }else {
+                } else {
                     handleFacebookIV();
                 }
                 break;
-            case R.id.place_details_activity_instagram :
-                if(currentUser == null){
+            case R.id.place_details_activity_instagram:
+                if (currentUser == null) {
                     showAlertDialogForRegister();
                     break;
-                }else {
+                } else {
                     handleInstagramIV();
                     break;
                 }
-            case R.id.place_details_activity_twitter :
-                if(currentUser == null){
+            case R.id.place_details_activity_twitter:
+                if (currentUser == null) {
                     showAlertDialogForRegister();
                     break;
-                }else {
+                } else {
                     handleTwitterIV();
                     break;
                 }
-            case R.id.place_details_activity_web :
-                if(currentUser == null){
+            case R.id.place_details_activity_web:
+                if (currentUser == null) {
                     showAlertDialogForRegister();
                     break;
-                }else {
+                } else {
                     handleWebsiteIV();
                     break;
                 }
@@ -629,5 +634,12 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 callPhoneNo();
             }
+        } else if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initLocation();
+            }else{
+                initLocationRV();
+            }
         }
-    }}
+    }
+}

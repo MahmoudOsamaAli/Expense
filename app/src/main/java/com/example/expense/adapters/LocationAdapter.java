@@ -3,6 +3,7 @@ package com.example.expense.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.MyHolder> {
 
 
+    private static final String TAG = "LocationAdapter";
     private Context mContext;
     private ArrayList<LocationModel> data;
     private String placeName;
@@ -33,6 +35,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.MyHold
         this.placeName = placeName;
         this.distances = mDistances;
     }
+
     public LocationAdapter(Context mContext, ArrayList<LocationModel> data, String placeName) {
         this.mContext = mContext;
         this.data = data;
@@ -51,10 +54,23 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.MyHold
     public void onBindViewHolder(@NonNull LocationAdapter.MyHolder holder, int position) {
         holder.mStreet.setText(data.get(position).getStreet());
         holder.mCity.setText(data.get(position).getCity());
-        if(distances != null ) {
+        if (distances != null && !distances.isEmpty()) {
+            Log.i(TAG,"distances not null");
             String distance = String.valueOf(distances.get(position));
             holder.mDistance.setText(distance);
+            holder.mDistance.setVisibility(View.VISIBLE);
+            holder.mDistanceLbl.setVisibility(View.VISIBLE);
+
+        } else {
+            Log.i(TAG,"distances null");
+            holder.mDistance.setVisibility(View.GONE);
+            holder.mDistanceLbl.setVisibility(View.GONE);
         }
+    }
+
+    public void notifyDataChanged(ArrayList<Double> mDistance){
+        this.distances = mDistance;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -69,6 +85,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.MyHold
         TextView mCity;
         @BindView(R.id.distance_value)
         TextView mDistance;
+        @BindView(R.id.distance_lbl)
+        TextView mDistanceLbl;
 
         MyHolder(@NonNull View itemView) {
             super(itemView);
