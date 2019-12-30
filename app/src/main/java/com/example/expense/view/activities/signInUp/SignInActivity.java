@@ -1,6 +1,7 @@
 package com.example.expense.view.activities.signInUp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -102,6 +103,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.normal_sign_button)
     Button mNormalSignUp;
 
+    @BindView(R.id.app_name)
+    TextView appName;
+
     Handler handler = new Handler();
     Runnable runnableLogIn = new Runnable() {
         @Override
@@ -141,6 +145,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             mGoogleButton.setOnClickListener(this);
             fbLogIn.setOnClickListener(this);
             mNormalSignUp.setOnClickListener(this);
+
+            Typeface nexaFontLight = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa-Light.otf");
+            Typeface nexaFontBold = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa-Bold.otf");
+
+            appName.setTypeface(nexaFontBold);
 
             mConfirmPasswordEditText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -205,33 +214,33 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void startSignInWithFB() {
-            try {
-                mCallbackManager = CallbackManager.Factory.create();
-                Log.i(TAG, "startSignInWithFB: init call back manager");
-                LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile"));
-                Log.i(TAG, "startSignInWithFB: setting permissions to LoginManager  like email and profile");
-                LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.i(TAG, "register callback  facebook:onSuccess:" + loginResult);
-                        handleAccessTokenFB(loginResult.getAccessToken());
-                        Log.i(TAG, "register callback onSuccess: calling method handleAccessTokenFB with a null GoogleSignInAccount");
-                    }
+        try {
+            mCallbackManager = CallbackManager.Factory.create();
+            Log.i(TAG, "startSignInWithFB: init call back manager");
+            LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile"));
+            Log.i(TAG, "startSignInWithFB: setting permissions to LoginManager  like email and profile");
+            LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    Log.i(TAG, "register callback  facebook:onSuccess:" + loginResult);
+                    handleAccessTokenFB(loginResult.getAccessToken());
+                    Log.i(TAG, "register callback onSuccess: calling method handleAccessTokenFB with a null GoogleSignInAccount");
+                }
 
-                    @Override
-                    public void onCancel() {
-                        Log.d(TAG, "facebook:onCancel");
-                    }
+                @Override
+                public void onCancel() {
+                    Log.d(TAG, "facebook:onCancel");
+                }
 
-                    @Override
-                    public void onError(FacebookException error) {
-                        Log.i(TAG, "facebook:onError", error);
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                @Override
+                public void onError(FacebookException error) {
+                    Log.i(TAG, "facebook:onError", error);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
     private void startSignInWithTwitter() {
         OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
@@ -318,7 +327,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     if (task.isSuccessful()) {
                         Log.i(TAG, "signInWithCredential:success");
                         String m = "message";
-                        Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
                         i.putExtra("message", m);
                         startActivity(i);
                         finish();
@@ -337,7 +346,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     if (task.isSuccessful()) {
                         Log.i(TAG, "signInWithCredential:success");
                         String m = "message";
-                        Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
                         i.putExtra("message", m);
                         startActivity(i);
                         finish();
@@ -377,9 +386,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Log.w(TAG, "Google sign in failed", e);
             Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show();
         }
-        if(mCallbackManager != null){
+        if (mCallbackManager != null) {
             boolean b = mCallbackManager.onActivityResult(requestCode, resultCode, data);
-            Log.i(TAG, "onActivityResult: calling mCallBackManager "+b);
+            Log.i(TAG, "onActivityResult: calling mCallBackManager " + b);
         }
     }
 
@@ -513,7 +522,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             if (user != null) {
                 //TODO save user data into shared preferences
                 String m = "message";
-                Intent i = new  Intent(SignInActivity.this, HomeActivity.class);
+                Intent i = new Intent(SignInActivity.this, HomeActivity.class);
                 i.putExtra("message", m);
                 startActivity(i);
                 // Start home activity

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewAnimator;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -25,6 +26,9 @@ public class FavoriteFragment extends Fragment {
 
     @BindView(R.id.RV_favorite_fragment)
     RecyclerView mRV;
+    @BindView(R.id.fragment_favorite_view_animator)
+    ViewAnimator mViewAnimator;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorite , container, false);
@@ -39,6 +43,7 @@ public class FavoriteFragment extends Fragment {
     private void init() {
 //        presenter = new FavoritesPresenter(this);
 //        presenter.getFavorites();
+        mViewAnimator.setDisplayedChild(1);
     }
 
     private void setmRV(ArrayList<PlaceModel> list){

@@ -48,4 +48,19 @@
     <string name="sign_up_with_facebook">التسجيل بحساب الفيسبوك</string>
     <string name="sign_up_with_twitter">التسجيل بحساب تويتر</string>
     <string name="back">الرجوع</string>
+    <string name="gender_text">ذكر</string>
+    <string name="search_hint">بحث...</string>
+    <string name="search_title">بحث</string>
+    <string name="category">الفئة</string>
+    <string name="coffee">كافيهات و مطاعم</string>
+    <string name="electronics">التكترونيات</string>
+    <string name="restaurant">ترفيه</string>
+    <string name="beauty">اكسسورات تجميل</string>
+    <string name="clothes">ملابس</string>
+    <string name="others">أخرى</string>
+    <string name="more">عرض المزيد</string>
+    <string name="oops_wait_for_more_places_to_visit" translatable="false">انتظر المزيد من الأماكن لزيارتها</string>
+    <string name="edit_place_nav_lbl">تعديل بيانات مكان</string>
+    <string name="mile">ميل</string>
+    <string name="no_favorites">لا يوجد مفضلات، بعد!</string>
 </resources>

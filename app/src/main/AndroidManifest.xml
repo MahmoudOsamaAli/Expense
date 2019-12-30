@@ -45,7 +45,8 @@
         <activity android:name=".view.activities.selectedCategory.SelectedCategory"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
         <activity android:name=".view.activities.Home.HomeActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation">
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

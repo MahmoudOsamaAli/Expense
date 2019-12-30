@@ -47,10 +47,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             switch (oldVersion) {
-                case 1:
+                case 2:
                     //TODO upgrade
                     Log.i(TAG, "database version is changed to 4");
-                    upgradeVersionToV1(db);
+                    upgradeVersionToV2(db);
                     break;
                 default:
                     onCreate(db);
@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void upgradeVersionToV1(SQLiteDatabase db) {
+    private void upgradeVersionToV2(SQLiteDatabase db) {
         try {
             ArrayList<String> bccTablesNamesList = getAllDBTablesNames(mContext);
             if (bccTablesNamesList != null) {

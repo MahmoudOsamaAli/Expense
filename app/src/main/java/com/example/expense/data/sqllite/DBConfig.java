@@ -16,7 +16,7 @@ public class DBConfig {
     private static final String INTEGER = " INTEGER";
     private static final String REAL = " REAL";
     private static final String NUMERIC = " NUMERIC";
-    private static final String PrimaryKeyAutoIncrement = "PRIMARY KEY AUTOINCREMENT,";
+    private static final String PrimaryKeyAutoIncrement = "PRIMARY KEY AUTO INCREMENT,";
 
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor public.
@@ -38,7 +38,7 @@ public class DBConfig {
 
     /* Places Table...*/
     static class PlacesTable implements BaseColumns {
-        static final String TABLE_NAME = "LocationsTable";
+        static final String TABLE_NAME = "PlacesTable";
         static final String COLUMN_ID = "ID";
         static final String COLUMN_Name = "Name";
         static final String COLUMN_CATEGORY = "Category";
@@ -54,7 +54,7 @@ public class DBConfig {
 
     /* Places Table...*/
     static class RequestsTable implements BaseColumns {
-        static final String TABLE_NAME = "LocationsTable";
+        static final String TABLE_NAME = "RequestsTable";
         static final String COLUMN_ID = "ID";
         static final String COLUMN_User_Name = "UserName";
         static final String COLUMN_DATE = "Date";

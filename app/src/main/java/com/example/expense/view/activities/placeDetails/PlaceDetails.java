@@ -320,6 +320,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.place_details_favorite_item_menu) {
+            FirebaseAuth.getInstance();
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 handleFavorite(item);
             } else {
