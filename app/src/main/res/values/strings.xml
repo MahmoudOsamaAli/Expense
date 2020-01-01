@@ -60,7 +60,8 @@
     <string name="search_title">Search</string>
 
     <string name="category">Category</string>
-    <string name="coffee">Cafe &amp; Restaurant</string>
+<!--    <string name="coffee">Cafe &amp; Restaurant</string>-->
+    <string name="coffee">Cafe</string>
     <string name="electronics">Electronics</string>
     <string name="restaurant">Entertainment</string>
     <string name="clothes">Clothes</string>
@@ -74,4 +75,8 @@
     <string name="edit_place_nav_lbl">Edit Place</string>
     <string name="mile">mile</string>
     <string name="no_favorites">No Favorites, yet!</string>
+    <string name="favorite_place_saved">Favorite saved!</string>
+    <string name="favorite_place_fail_to_be_saved">Favorite bot saved, try again!</string>
+    <string name="favorite_place_removed">Unfavored</string>
+    <string name="favorite_place_failed_to_removed">Fail, try again!</string>
 </resources>

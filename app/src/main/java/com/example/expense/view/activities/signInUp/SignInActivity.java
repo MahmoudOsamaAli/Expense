@@ -175,8 +175,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 mConfirmPasswordEditText.setTextColor(getResources().getColor(R.color.text_color));
                             } else if (password.length() < confirmPassword.length()) {
                                 mConfirmPasswordEditText.setTextColor(getResources().getColor(R.color.red));
-                            } else if (password.length() == confirmPassword.length() && !password.matches(confirmPassword)) {
-                                mConfirmPasswordEditText.setTextColor(getResources().getColor(R.color.red));
+                            } else {
+                                if (!password.matches(confirmPassword)) {
+                                    mConfirmPasswordEditText.setTextColor(getResources().getColor(R.color.red));
+                                }
                             }
                         }
                     } catch (Exception e) {
@@ -324,17 +326,23 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void getCredentialWithFB(AuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Log.i(TAG, "signInWithCredential:success");
-                        String m = "message";
-                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
-                        i.putExtra("message", m);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Log.i(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                    try {
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "signInWithCredential:success");
+//                        String m = "message";
+//                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
+//                        i.putExtra("message", m);
+//                        startActivity(i);
+//                        finish();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            Log.i(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 });
 
@@ -343,17 +351,23 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void getCredentialWithGoogle(AuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Log.i(TAG, "signInWithCredential:success");
-                        String m = "message";
-                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
-                        i.putExtra("message", m);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Log.i(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                    try {
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "signInWithCredential:success");
+//                        String m = "message";
+//                        Intent i = new Intent(SignInActivity.this, HomeActivity.class);
+//                        i.putExtra("message", m);
+//                        startActivity(i);
+//                        finish();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            Log.i(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 });
     }
@@ -521,10 +535,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             if (user != null) {
                 //TODO save user data into shared preferences
-                String m = "message";
-                Intent i = new Intent(SignInActivity.this, HomeActivity.class);
-                i.putExtra("message", m);
-                startActivity(i);
+//                String m = "message";
+//                Intent i = new Intent(SignInActivity.this, HomeActivity.class);
+//                i.putExtra("message", m);
+//                startActivity(i);
                 // Start home activity
                 finish();
             }

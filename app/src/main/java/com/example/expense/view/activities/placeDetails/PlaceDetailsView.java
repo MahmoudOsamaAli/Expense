@@ -11,4 +11,8 @@ public interface PlaceDetailsView {
 //    void onGetPlaceImages(ArrayList<PlaceImage> list);
 //    void onGetSeekBarRating(ArrayList<Integer> list);
     void onGetChartRating(double value);
+
+    void onSaveFavoritePlace(boolean status);
+
+    void onRemoveFavoritePlace(boolean status);
 }

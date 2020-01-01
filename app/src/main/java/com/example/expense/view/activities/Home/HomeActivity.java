@@ -8,23 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.example.expense.R;
-import com.example.expense.pojo.Model.LocationModel;
-import com.example.expense.pojo.Model.PlaceModel;
-import com.example.expense.view.fragments.home.HomeFragment;
-import com.example.expense.view.fragments.aboutUs.AboutUsFragment;
-import com.example.expense.view.fragments.addProject.AddProjectFragment;
-import com.example.expense.view.fragments.contactUs.ContactUsFragment;
-import com.example.expense.view.fragments.favorites.FavoriteFragment;
-import com.example.expense.view.fragments.notifications.NotificationsFragment;
-import com.example.expense.view.fragments.profile.ProfileFragment;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,13 +18,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.expense.R;
+import com.example.expense.pojo.Model.LocationModel;
+import com.example.expense.pojo.Model.PlaceModel;
+import com.example.expense.view.fragments.aboutUs.AboutUsFragment;
+import com.example.expense.view.fragments.addProject.AddProjectFragment;
+import com.example.expense.view.fragments.contactUs.ContactUsFragment;
+import com.example.expense.view.fragments.favorites.FavoriteFragment;
+import com.example.expense.view.fragments.home.HomeFragment;
+import com.example.expense.view.fragments.notifications.NotificationsFragment;
+import com.example.expense.view.fragments.profile.ProfileFragment;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeActivityListener{
+public class HomeActivity extends AppCompatActivity implements HomeActivityListener {
 
     @BindView(R.id.toolbar_home)
     Toolbar toolbar;
@@ -76,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             Log.i(TAG, "onCreate: intent has string " + m);
             if (savedInstanceState == null && m == null) {
                 setFragments(new HomeFragment(), AnimationStates.BOTTOM_TO_TOP);
-            }else if(m != null){
+            } else if (m != null) {
                 setFragments(new ProfileFragment(), AnimationStates.BOTTOM_TO_TOP);
 //                navView.setSelectedItemId(R.id.navigation_profile);
             }
@@ -219,23 +218,29 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
                         if (currFragment instanceof AddProjectFragment) break;
                         setActionBarTitle(getString(R.string.add_project));
                         setFragments(new AddProjectFragment(), states);
+                        menuItem.setChecked(true);
                         break;
 
                     case R.id.about_us_nav:// Place
                         setActionBarTitle(getString(R.string.about_us));
                         if (currFragment instanceof AboutUsFragment) break;
                         setFragments(new AboutUsFragment(), states);
+                        menuItem.setChecked(true);
                         break;
 
                     case R.id.contact_us_nav:
                         setActionBarTitle(getString(R.string.contact_us));
                         if (currFragment instanceof ContactUsFragment) break;
                         setFragments(new ContactUsFragment(), states);
+                        menuItem.setChecked(true);
                         break;
 
                     case R.id.sign_out:
                         FirebaseAuth.getInstance().signOut();
-//                        startActivity(new Intent(HomeActivity.this, SignInActivity.class));
+                        if (currFragment instanceof HomeFragment) break;
+//                        setFragments(new HomeFragment(), states);
+                        navView.setSelectedItemId(R.id.navigation_home);
+                        navView.setSelected(true);
                         break;
 
                 }
@@ -245,7 +250,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
 
             //These lines should be added in the OnCreate() of your main activity
             //requestsCount = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
-                    //findItem(R.id.requests_nav));
+            //findItem(R.id.requests_nav));
             //This method will initialize the count value
             //initializeRequestCountDrawer();
         } catch (Exception e) {
@@ -265,7 +270,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
     public void setFragments(Fragment fragment, AnimationStates state) {
         try {
             currFragment = fragment;
-            Log.i(TAG, "setFragments: current fragment = "+ currFragment.getClass().getCanonicalName());
+            Log.i(TAG, "setFragments: current fragment = " + currFragment.getClass().getCanonicalName());
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (state == AnimationStates.RIGHT_TO_LEFT)
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
@@ -298,7 +303,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
                 finish();
             } else {
                 if (fragment instanceof AboutUsFragment || fragment instanceof ContactUsFragment
-                        || fragment instanceof AddProjectFragment ) {
+                        || fragment instanceof AddProjectFragment) {
                     navView.setSelectedItemId(navView.getSelectedItemId());
                 } else if (fragment instanceof FavoriteFragment || fragment instanceof NotificationsFragment
                         || fragment instanceof ProfileFragment) {
@@ -364,7 +369,6 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             e.printStackTrace();
         }
     }
-
 
 
 }

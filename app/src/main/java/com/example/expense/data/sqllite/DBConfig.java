@@ -46,6 +46,7 @@ public class DBConfig {
         static final String COLUMN_DESCRIPTION = "Description";
         static final String COLUMN_FACEBOOK_URL = "Facebook";
         static final String COLUMN_TWITTER_URL = "Twitter";
+        static final String COLUMN_INSTAGRAM_URL = "instagram";
         static final String COLUMN_WEBSITE_URL = "Website";
         static final String COLUMN_LIKES_COUNT = "Likes";
         static final String COLUMN_OKAY_COUNT = "Okay";
@@ -68,6 +69,22 @@ public class DBConfig {
         static final String COLUMN_PLACE_ID = "PlaceID";
     }
 
+    /* Places Table...*/
+    static class FavoritePlacesTable implements BaseColumns {
+        static final String TABLE_NAME = "FavoritePlacesTable";
+        static final String COLUMN_ID = "ID";
+        static final String COLUMN_Name = "Name";
+        static final String COLUMN_CATEGORY = "Category";
+        static final String COLUMN_PHONE_NUMBER = "PhoneNo";
+        static final String COLUMN_DESCRIPTION = "Description";
+        static final String COLUMN_FACEBOOK_URL = "Facebook";
+        static final String COLUMN_TWITTER_URL = "Twitter";
+        static final String COLUMN_INSTAGRAM_URL = "instagram";
+        static final String COLUMN_WEBSITE_URL = "Website";
+        static final String COLUMN_LIKES_COUNT = "Likes";
+        static final String COLUMN_OKAY_COUNT = "Okay";
+        static final String COLUMN_DISLIKES_COUNT = "Dislikes";
+    }
 
     private static final String SQL_CREATE_LOCATIONS_TABLE = "CREATE TABLE " + LocationsTable.TABLE_NAME + " (" +
             LocationsTable.COLUMN_ID + TEXT + "," +
@@ -79,14 +96,29 @@ public class DBConfig {
             LocationsTable.COLUMN_LONGITUDE + REAL + ");";
 
 
+    private static final String SQL_CREATE_FAVORITE_PLACES_TABLE = "CREATE TABLE " + FavoritePlacesTable.TABLE_NAME + " (" +
+            FavoritePlacesTable.COLUMN_ID + TEXT + "," +
+            FavoritePlacesTable.COLUMN_Name + TEXT + "," +
+            FavoritePlacesTable.COLUMN_CATEGORY + TEXT + "," +
+            FavoritePlacesTable.COLUMN_DESCRIPTION + TEXT + "," +
+            FavoritePlacesTable.COLUMN_PHONE_NUMBER + TEXT + "," +
+            FavoritePlacesTable.COLUMN_FACEBOOK_URL + TEXT + "," +
+            FavoritePlacesTable.COLUMN_TWITTER_URL + TEXT + "," +
+            FavoritePlacesTable.COLUMN_INSTAGRAM_URL + TEXT + "," +
+            FavoritePlacesTable.COLUMN_WEBSITE_URL + TEXT + "," +
+            FavoritePlacesTable.COLUMN_LIKES_COUNT + INTEGER + "," +
+            FavoritePlacesTable.COLUMN_OKAY_COUNT + INTEGER + "," +
+            FavoritePlacesTable.COLUMN_DISLIKES_COUNT + INTEGER + ");";
+
     private static final String SQL_CREATE_PLACES_TABLE = "CREATE TABLE " + PlacesTable.TABLE_NAME + " (" +
-            PlacesTable.COLUMN_ID + INTEGER + "," +
+            PlacesTable.COLUMN_ID + TEXT + "," +
             PlacesTable.COLUMN_Name + TEXT + "," +
             PlacesTable.COLUMN_CATEGORY + TEXT + "," +
             PlacesTable.COLUMN_DESCRIPTION + TEXT + "," +
             PlacesTable.COLUMN_PHONE_NUMBER + TEXT + "," +
             PlacesTable.COLUMN_FACEBOOK_URL + TEXT + "," +
             PlacesTable.COLUMN_TWITTER_URL + TEXT + "," +
+            PlacesTable.COLUMN_INSTAGRAM_URL + TEXT + "," +
             PlacesTable.COLUMN_WEBSITE_URL + TEXT + "," +
             PlacesTable.COLUMN_LIKES_COUNT + INTEGER + "," +
             PlacesTable.COLUMN_OKAY_COUNT + INTEGER + "," +
@@ -100,7 +132,7 @@ public class DBConfig {
 
     private static final String SQL_CREATE_IMAGES_TABLE = "CREATE TABLE " + ImagesTable.TABLE_NAME + " (" +
             ImagesTable.COLUMN_ID + INTEGER + PrimaryKeyAutoIncrement +
-            ImagesTable.COLUMN_PLACE_ID + INTEGER + "," +
+            ImagesTable.COLUMN_PLACE_ID + TEXT + "," +
             ImagesTable.COLUMN_URL + TEXT + ");";
 
     static class TablesSqlStatements {
@@ -111,7 +143,7 @@ public class DBConfig {
             listTablesCreationStatementSql.add(SQL_CREATE_PLACES_TABLE);
             listTablesCreationStatementSql.add(SQL_CREATE_REQUESTS_TABLE);
             listTablesCreationStatementSql.add(SQL_CREATE_IMAGES_TABLE);
-
+            listTablesCreationStatementSql.add(SQL_CREATE_FAVORITE_PLACES_TABLE);
             return listTablesCreationStatementSql;
         }
 
@@ -119,4 +151,6 @@ public class DBConfig {
             return DROP_TABLE_LBL + tableName;
         }
     }
+
+
 }

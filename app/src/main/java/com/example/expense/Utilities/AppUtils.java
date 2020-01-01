@@ -2,6 +2,7 @@ package com.example.expense.Utilities;
 
 import android.content.Context;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
@@ -107,5 +108,13 @@ public class AppUtils {
             //
         }
         return "data:image/jpg;base64," + imgBase64;
+    }
+
+    public static void showToast(Context context, String message) {
+        try {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

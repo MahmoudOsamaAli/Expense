@@ -63,4 +63,8 @@
     <string name="edit_place_nav_lbl">تعديل بيانات مكان</string>
     <string name="mile">ميل</string>
     <string name="no_favorites">لا يوجد مفضلات، بعد!</string>
+    <string name="favorite_place_saved">تم الحفظ في المفضلات</string>
+    <string name="favorite_place_fail_to_be_saved">خطأ في الحفظ كمفضلة ، حاول مجددا</string>
+    <string name="favorite_place_removed">ازالة من المفضلة</string>
+    <string name="favorite_place_failed_to_removed">خطأ، حاول مجددا</string>
 </resources>

@@ -1,15 +1,5 @@
 package com.example.expense.view.activities.placeDetails;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
-
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -28,6 +18,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
 import com.example.expense.Utilities.AppUtils;
@@ -39,7 +38,6 @@ import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.activities.signInUp.SignInActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -191,7 +189,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
             initRatings();
 
 
-            presenter = new PlaceDetailsPresenter(this);
+            presenter = new PlaceDetailsPresenter(this, mCurrent);
 //            presenter.getLocationsList();
 //            presenter.getPlaceImagesList();
 //            presenter.getRatings();
@@ -326,6 +324,8 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
             } else {
                 showAlertDialogForRegister();
             }
+        } else if (item.getItemId() == android.R.id.home) {
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -362,10 +362,28 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
             if (!favorite) {
                 favorite = true;
                 item.setIcon(R.drawable.ic_favorite_fill_white_24dp);
+                saveFavoritePlace();
             } else {
                 favorite = false;
                 item.setIcon(R.drawable.ic_favorite_border_white_24dp);
+                removeFavoritePlace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeFavoritePlace() {
+        try {
+            presenter.removeFavoritePlace(place);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveFavoritePlace() {
+        try {
+            presenter.saveFavoritePlace(place);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -415,6 +433,50 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
 
         slimChart.setText(Double.toString(value));
         slimChart.setRoundEdges(true);
+    }
+
+    @Override
+    public void onSaveFavoritePlace(boolean status) {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (status) {
+                            AppUtils.showToast(mCurrent, getString(R.string.favorite_place_saved));
+                        } else {
+                            AppUtils.showToast(mCurrent, getString(R.string.favorite_place_fail_to_be_saved));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRemoveFavoritePlace(boolean status) {
+        try {
+
+            runOnUiThread(() -> {
+                try {
+                    if (status) {
+                        AppUtils.showToast(mCurrent, getString(R.string.favorite_place_removed));
+                    } else {
+                        AppUtils.showToast(mCurrent, getString(R.string.favorite_place_failed_to_removed));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setSeekBars(int likesCount, int okayCount, int dislikesCount) {
@@ -638,7 +700,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
         } else if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initLocation();
-            }else{
+            } else {
                 initLocationRV();
             }
         }
