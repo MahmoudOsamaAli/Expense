@@ -1,16 +1,20 @@
 package com.example.expense.view.activities.Home;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.expense.Utilities.AppUtils;
+import com.example.expense.Utilities.PrefManager;
 import com.example.expense.configs.App;
 import com.example.expense.data.firebase.PlaceFirebaseProcess;
 import com.example.expense.data.firebase.callbacks.PlaceFirebaseListener;
 import com.example.expense.data.sqllite.DBProcess;
 import com.example.expense.pojo.Model.PlaceModel;
+import com.example.expense.view.fragments.favorites.DBFavoritePlaceCallback;
 
 import java.util.ArrayList;
 
-public class HomeActivityPresenter implements PlaceFirebaseListener {
+public class HomeActivityPresenter implements PlaceFirebaseListener , DBHomeCallback {
 
     private final String TAG = "HomeActPresenter";
 
@@ -18,11 +22,13 @@ public class HomeActivityPresenter implements PlaceFirebaseListener {
     private Context context;
     private PlaceFirebaseProcess placeFBProcess;
     private DBProcess dbProcess;
+    private PrefManager mPrefManager;
 
     HomeActivityPresenter(HomeActivityListener listener, Context context) {
         this.listener = listener;
         this.context = context;
         this.dbProcess = new DBProcess(this.context);
+        this.mPrefManager = new PrefManager(context);
     }
 
     public HomeActivityPresenter(Context context) {
@@ -32,34 +38,21 @@ public class HomeActivityPresenter implements PlaceFirebaseListener {
     void readPlaceByCategoryFromFireStore() {
         placeFBProcess = new PlaceFirebaseProcess(context, this);
 
-//        ArrayList locations = new ArrayList();
-//        locations.add(new LocationModel("1", "1", "Egypt", "Cairo", "Al Haram St", 30.02135, 31.21362));
-//        locations.add(new LocationModel("2", "1", "Egypt", "Cairo", "Faisal St", 30.02135, 31.21362));
-//        locations.add(new LocationModel("3", "1", "Egypt", "Cairo", "El Marghany St", 30.02135, 31.21362));
-//        locations.add(new LocationModel("4", "1", "Egypt", "Cairo", "El Khalifa Al-Maamon St", 30.02135, 31.21362));
-//
-//        ArrayList<ImageModel> images = new ArrayList<>();
-//        images.add(new ImageModel("1", "1", "https://www.imdb.com/title/tt2575988/"));
-//        images.add(new ImageModel("1", "1", "https://www.imdb.com/title/tt2575988/"));
-//
-//        PlaceModel placeModel = new PlaceModel();
-//        placeModel.setName("MAC");
-//        placeModel.setId("1");
-//        placeModel.setCategory("Restaurant");
-//        placeModel.setDescription("Blah Blah Blah");
-//        placeModel.setPhoneNumber("01096611061");
-//        placeModel.setFacebookUrl("https://www.facebook.com/GoogleStudents/");
-//        placeModel.setTwitterUrl("");
-//        placeModel.setWebsiteUrl("https://firebase.google.com/docs/storage/android/start?authuser=0");
-//        placeModel.setLikesCount(2);
-//        placeModel.setOkayCount(2);
-//        placeModel.setDislikesCount(3);
-//        placeModel.setLocationModels(locations);
-//        placeModel.setImagesURL(images);
+        if(AppUtils.inNetwork(context)) {
+            placeFBProcess.readPlacesByCategory(PlaceFirebaseProcess.categories_collection, PlaceFirebaseProcess.restaurant_document, PlaceFirebaseProcess.places_collection);
+        }else{
+            listener.displayConnectionError();
+        }
+    }
 
-//        placeFBProcess.addPlaceLocations(placeModel);
+    void readFavoritePlacesFromFireStore() {
+        String UID = mPrefManager.readString(PrefManager.USER_ID);
 
-        placeFBProcess.readPlacesByCategory(PlaceFirebaseProcess.categories_collection, PlaceFirebaseProcess.restaurant_document, PlaceFirebaseProcess.places_collection);
+        if(AppUtils.inNetwork(context)) {
+            placeFBProcess.readFavoritePlaces(PlaceFirebaseProcess.favorite_places, PlaceFirebaseProcess.favorite_users, UID);
+        }else{
+            listener.displayConnectionError();
+        }
     }
 
     @Override
@@ -78,7 +71,7 @@ public class HomeActivityPresenter implements PlaceFirebaseListener {
     }
 
     @Override
-    public void onAddPlaceSuccess(boolean status, Throwable t) {
+    public void onRequestPlaceSuccess(boolean status, Throwable t) {
 
     }
 
@@ -89,6 +82,49 @@ public class HomeActivityPresenter implements PlaceFirebaseListener {
 
     @Override
     public void onDeletePlace(boolean status) {
+
+    }
+
+    @Override
+    public void onReadFavoritePlaces(ArrayList<PlaceModel> places) {
+            try{
+                if (places != null && !places.isEmpty()){
+                    Log.i(TAG,"onReadFavoritePlaces(): places != null");
+                    Log.i(TAG,"onReadFavoritePlaces(): places size = " + places.size());
+                    if (dbProcess != null){
+                        Log.i(TAG,"onReadFavoritePlaces(): dbProcess != null");
+                        for (PlaceModel place : places) {
+                            dbProcess.saveFavorite(place, this);
+                        }
+                    }
+                }else{
+                    Log.i(TAG,"onReadFavoritePlaces(): places = null");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+    }
+
+    @Override
+    public void onSaveFavoritePlace(boolean status, Throwable t) {
+            if (status){
+                Log.i(TAG,"onSaveFavoritePlace(): saving favorites from Firestore = true");
+            }else{
+                Log.i(TAG,"onSaveFavoritePlace(): saving favorites from Firestore = false");
+
+                if (t != null){
+                    t.printStackTrace();
+                }
+            }
+    }
+
+    @Override
+    public void onRemoveFavoritePlaceFromFirebase(boolean status, Throwable t) {
+
+    }
+
+    @Override
+    public void onSaveFavoritePlaceIntoFirebase(boolean status, Throwable t) {
 
     }
 
@@ -110,4 +146,8 @@ public class HomeActivityPresenter implements PlaceFirebaseListener {
         }
     }
 
+    @Override
+    public void onSaveFavorites(boolean status, Throwable t) {
+
+    }
 }

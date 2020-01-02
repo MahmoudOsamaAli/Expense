@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.expense.R;
+import com.example.expense.Utilities.AppUtils;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.fragments.aboutUs.AboutUsFragment;
@@ -131,6 +132,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
 
             //reading data from firebase
             presenter.readPlaceByCategoryFromFireStore();
+
+            //reading favorites from firebase
+            presenter.readFavoritePlacesFromFireStore();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -368,6 +372,20 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void displayConnectionError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    AppUtils.showAlertDialog(mCurrent,getString(R.string.check_network_connection));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 

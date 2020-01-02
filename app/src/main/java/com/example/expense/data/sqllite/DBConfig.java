@@ -16,7 +16,8 @@ public class DBConfig {
     private static final String INTEGER = " INTEGER";
     private static final String REAL = " REAL";
     private static final String NUMERIC = " NUMERIC";
-    private static final String PrimaryKeyAutoIncrement = "PRIMARY KEY AUTO INCREMENT,";
+    private static final String PrimaryKeyAutoIncrement = "PRIMARY KEY AUTOINCREMENT,";
+    private static final String PrimaryKey = "PRIMARY KEY,";
 
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor public.
@@ -87,8 +88,8 @@ public class DBConfig {
     }
 
     private static final String SQL_CREATE_LOCATIONS_TABLE = "CREATE TABLE " + LocationsTable.TABLE_NAME + " (" +
-            LocationsTable.COLUMN_ID + TEXT + "," +
-            LocationsTable.COLUMN_PLACE_ID + INTEGER + "," +
+            LocationsTable.COLUMN_ID + INTEGER + " " + PrimaryKeyAutoIncrement +
+            LocationsTable.COLUMN_PLACE_ID + TEXT + "," +
             LocationsTable.COLUMN_COUNTRY + TEXT + "," +
             LocationsTable.COLUMN_CITY + TEXT + "," +
             LocationsTable.COLUMN_STREET + TEXT + "," +
@@ -97,7 +98,7 @@ public class DBConfig {
 
 
     private static final String SQL_CREATE_FAVORITE_PLACES_TABLE = "CREATE TABLE " + FavoritePlacesTable.TABLE_NAME + " (" +
-            FavoritePlacesTable.COLUMN_ID + TEXT + "," +
+            FavoritePlacesTable.COLUMN_ID + TEXT + " " + PrimaryKey +
             FavoritePlacesTable.COLUMN_Name + TEXT + "," +
             FavoritePlacesTable.COLUMN_CATEGORY + TEXT + "," +
             FavoritePlacesTable.COLUMN_DESCRIPTION + TEXT + "," +
@@ -131,7 +132,7 @@ public class DBConfig {
             RequestsTable.COLUMN_User_Name + TEXT + ");";
 
     private static final String SQL_CREATE_IMAGES_TABLE = "CREATE TABLE " + ImagesTable.TABLE_NAME + " (" +
-            ImagesTable.COLUMN_ID + INTEGER + PrimaryKeyAutoIncrement +
+            ImagesTable.COLUMN_ID + INTEGER + " " + PrimaryKeyAutoIncrement +
             ImagesTable.COLUMN_PLACE_ID + TEXT + "," +
             ImagesTable.COLUMN_URL + TEXT + ");";
 

@@ -45,17 +45,37 @@ class SelectedCategoryPresenter implements PlaceFirebaseListener {
     }
 
     @Override
-    public void onAddPlaceSuccess(boolean status, Throwable t) {
-
+    public void onRequestPlaceSuccess(boolean status, Throwable t) {
+            //Not Needed Here
     }
 
     @Override
     public void onEditPlaceSuccess(boolean status, Throwable t) {
-
+        //Not Needed Here
     }
 
     @Override
     public void onDeletePlace(boolean status) {
+        //Not Needed Here
+    }
+
+    @Override
+    public void onReadFavoritePlaces(ArrayList<PlaceModel> places) {
+        //Not Needed Here
+    }
+
+    @Override
+    public void onSaveFavoritePlace(boolean status, Throwable t) {
+        //Not Needed Here
+    }
+
+    @Override
+    public void onRemoveFavoritePlaceFromFirebase(boolean status, Throwable t) {
+        //Not Needed Here
+    }
+
+    @Override
+    public void onSaveFavoritePlaceIntoFirebase(boolean status, Throwable t) {
 
     }
 

@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
 import com.example.expense.Utilities.AppUtils;
 import com.example.expense.Utilities.NumberUtils;
+import com.example.expense.Utilities.PrefManager;
 import com.example.expense.adapters.LocationAdapter;
 import com.example.expense.adapters.MyPagerAdapter;
 import com.example.expense.pojo.Model.LocationModel;
@@ -130,14 +131,19 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
     PlaceModel place;
     private LocationAdapter locationAdapter;
     PlaceDetails mCurrent;
+    private PrefManager mPrefManager;
     private static final String TAG = "PlaceDetails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_details);
-        ButterKnife.bind(this);
-        init();
+        try {
+            setContentView(R.layout.activity_place_details);
+
+            init();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -173,21 +179,24 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
 
     private void init() {
         try {
+            ButterKnife.bind(this);
             mCurrent = PlaceDetails.this;
 
             place = getIntent().getParcelableExtra(getString(R.string.place_intent_lbl));
+
+            mPrefManager = new PrefManager(mCurrent);
+
+            initToolbar();
+            initImagesRV();
 
             if (place != null) {
                 mDescription.setText(place.getDescription());
                 Log.i(TAG, "init(): description = " + place.getDescription());
             }
 
-            initToolbar();
-            initImagesRV();
             initSocialMedia();
             initLocation();
             initRatings();
-
 
             presenter = new PlaceDetailsPresenter(this, mCurrent);
 //            presenter.getLocationsList();
@@ -211,19 +220,19 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
 
     private void initSocialMedia() {
         try {
-            if (place.getFacebookUrl() == null || place.getFacebookUrl().matches("none")) {
+            if (place.getFacebookUrl() == null || place.getFacebookUrl().matches("none") || place.getFacebookUrl().isEmpty()) {
                 mFacebookIV.setVisibility(View.GONE);
             }
 
-            if (place.getWebsiteUrl() == null || place.getWebsiteUrl().matches("none")) {
+            if (place.getWebsiteUrl() == null || place.getWebsiteUrl().matches("none") || place.getWebsiteUrl().isEmpty()) {
                 mTwitterIV.setVisibility(View.GONE);
             }
 
-            if (place.getTwitterUrl() == null || place.getTwitterUrl().matches("none")) {
+            if (place.getTwitterUrl() == null || place.getTwitterUrl().matches("none") || place.getTwitterUrl().isEmpty()) {
                 mWebsiteIV.setVisibility(View.GONE);
             }
 
-            if (place.getInstagramUrl() == null || place.getInstagramUrl().matches("none")) {
+            if (place.getInstagramUrl() == null || place.getInstagramUrl().matches("none") || place.getInstagramUrl().isEmpty()) {
                 mInstagramIV.setVisibility(View.GONE);
             }
         } catch (Exception e) {
@@ -309,9 +318,24 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
         return (rad * 180.0 / Math.PI);
     }
 
+    private void initFavorite(MenuItem favoriteItem) {
+        try {
+            boolean placeID = mPrefManager.readBoolean(place.getId());
+
+            if (placeID) {
+                favorite = true;
+                favoriteItem.setIcon(R.drawable.ic_favorite_fill_white_24dp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.place_details_menu, menu);
+        MenuItem favoriteItem = menu.findItem(R.id.place_details_favorite_item_menu);
+        initFavorite(favoriteItem);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -376,6 +400,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
     private void removeFavoritePlace() {
         try {
             presenter.removeFavoritePlace(place);
+            mPrefManager.saveBoolean(place.getId(), false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -384,6 +409,7 @@ public class PlaceDetails extends AppCompatActivity implements PlaceDetailsView,
     private void saveFavoritePlace() {
         try {
             presenter.saveFavoritePlace(place);
+            mPrefManager.saveBoolean(place.getId(), true);
         } catch (Exception e) {
             e.printStackTrace();
         }

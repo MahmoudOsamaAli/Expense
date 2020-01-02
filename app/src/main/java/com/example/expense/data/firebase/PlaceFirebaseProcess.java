@@ -3,8 +3,6 @@ package com.example.expense.data.firebase;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.expense.Utilities.PlaceColumns;
 import com.example.expense.adapters.ImagesFirebaseProcess;
 import com.example.expense.data.firebase.callbacks.LocationFBListener;
@@ -12,11 +10,7 @@ import com.example.expense.data.firebase.callbacks.PlaceFirebaseListener;
 import com.example.expense.data.sqllite.DBProcess;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.example.expense.pojo.Model.RequestModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -27,10 +21,14 @@ import java.util.Map;
 public class PlaceFirebaseProcess implements LocationFBListener {
 
     private FirebaseFirestore db;
-    private static String TAG = "PlaceFirebase";
-    public static String categories_collection = "Categories";
-    public static String restaurant_document = "Restaurant";
-    public static String places_collection = "places";
+    private final static String TAG = "PlaceFirebase";
+    private final static String requests = "Requests";
+
+    public final static String categories_collection = "Categories";
+    public final static String restaurant_document = "Restaurant";
+    public final static String places_collection = "places";
+    public final static String favorite_places = "Favorites";
+    public final static String favorite_users = "Users";
 
     private LocationsFirebaseProcess locationsFirebase;
     private ImagesFirebaseProcess imagesFirebase;
@@ -191,34 +189,25 @@ public class PlaceFirebaseProcess implements LocationFBListener {
                 ));
     }
 
-    public void addPlace(PlaceModel placeModel, PlaceFirebaseListener listener) {
-        db.collection(categories_collection).document(placeModel.getCategory()).collection(places_collection).add(placeModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                try {
-                    if (task.isSuccessful()) {
-                        if (listener != null) {
-                            listener.onAddPlaceSuccess(true, null);
-                        }
+    public void requestToAddPlace(RequestModel placeModel, PlaceFirebaseListener listener) {
+        db.collection(requests).add(placeModel).addOnCompleteListener(task -> {
+            try {
+                if (task.isSuccessful()) {
+                    if (listener != null) {
+                        listener.onRequestPlaceSuccess(true, null);
                     }
+                }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                if (listener != null) {
-                    listener.onAddPlaceSuccess(false, e);
-                }
+        }).addOnFailureListener(e -> {
+            if (listener != null) {
+                listener.onRequestPlaceSuccess(false, e);
             }
-        }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                if (listener != null) {
-                    listener.onAddPlaceSuccess(false, null);
-                }
+        }).addOnCanceledListener(() -> {
+            if (listener != null) {
+                listener.onRequestPlaceSuccess(false, null);
             }
         });
     }
@@ -232,72 +221,115 @@ public class PlaceFirebaseProcess implements LocationFBListener {
         }
     }
 
-//    public void onEditPlace(PlaceModel place, String oldCategory, EditPlacePresenter listener) {
-//        try {
-//            Log.i(TAG, "onEditPlace(): is called");
-//
-//            if (!oldCategory.matches(place.getCategory())) {
-//                db.collection(categories_collection).document(oldCategory).collection(places_collection).document(place.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Log.i(TAG, "onEditPlace(): place " + place.getName() + " in " + oldCategory + " is deleted Successfully");
-//                    }
-//                });
-//            }
-//            applyPlaceEdit(place);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void readFavoritePlaces(String favorite_places_child, String users_root, String UID) {
+        try {
+            if (db != null) {
+                db.collection(users_root).document(UID).collection(favorite_places_child).addSnapshotListener((documentSnapshot, e) -> {
+                    try {
+                        ArrayList<PlaceModel> favoriteResult = new ArrayList<>();
 
-//    private void applyPlaceEdit(PlaceModel place) {
-//        try {
-//
-//            db.collection(categories_collection).document(place.getCategory()).collection(places_collection).document(place.getId()).set(place).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if (callback != null) {
-//                        callback.onEditPlaceSuccess(true, null);
-//                    }
-//                }
-//            }).addOnFailureListener(e -> {
-//                if (callback != null) {
-//                    callback.onEditPlaceSuccess(false, e);
-//                }
-//            }).addOnCanceledListener(() -> {
-//                if (callback != null) {
-//                    callback.onEditPlaceSuccess(false, null);
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+                        if (documentSnapshot != null) {
+                            for (QueryDocumentSnapshot snapshot : documentSnapshot) {
 
-//    public void deletePlace(PlaceModel place) {
-//
-//        db.collection(categories_collection).document(place.getCategory()).collection(places_collection).document(place.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    if (callback != null) {
-//                        callback.onDeletePlace(true);
-//                    }
-//                } else if (task.isCanceled()) {
-//                    if (callback != null) {
-//                        callback.onDeletePlace(false);
-//                    }
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                e.printStackTrace();
-//                if (callback != null) {
-//                    callback.onDeletePlace(false);
-//                }
-//            }
-//        });
-//    }
+                                //initializing location result list
+                                ArrayList<LocationModel> locationsResult = new ArrayList<>();
+                                //initializing images result list
+                                ArrayList<String> imagesResult = new ArrayList<>();
+
+                                //reading place data from document
+                                HashMap<String, Object> data = (HashMap<String, Object>) snapshot.getData();
+                                //reading locations data from document
+                                ArrayList<Map<String, String>> locations = (ArrayList<Map<String, String>>) data.get(PlaceColumns.locationModels);
+                                //reading images data from document
+                                ArrayList<String> images = (ArrayList<String>) snapshot.get(PlaceColumns.imagesURL);
+
+                                Log.i(TAG, "readPlacesByCategory(): data size = " + data.size());
+                                //extracting locations from result
+                                extractLocations(locations, locationsResult);
+                                //extracting images from result
+                                extractImages(imagesResult, images);
+
+                                //extracting place from result
+                                PlaceModel placeModel = extractPlace(snapshot, data, imagesResult, locationsResult);
+                                //adding place result into places result list
+                                favoriteResult.add(placeModel);
+                            }
+                            if (callback != null) {
+                                callback.onReadFavoritePlaces(favoriteResult);
+                            }
+                        }
+
+                        if (e != null) {
+                            e.printStackTrace();
+                            if (callback != null) {
+                                callback.onReadFavoritePlaces(favoriteResult);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        if (callback != null) {
+                            callback.onReadFavoritePlaces(null);
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (callback != null) {
+                callback.onReadFavoritePlaces(null);
+            }
+        }
+    }
+
+    public void saveFavoritePlace(String users_root, String favorite_places_child, String UID, PlaceModel place) {
+        try {
+
+            Log.i(TAG, "saveFavoritePlace(): " + UID);
+
+            db.collection(users_root).document(UID).collection(favorite_places_child).add(place).addOnCompleteListener(task -> {
+                try {
+                    if (task.isSuccessful()) {
+                        if (callback != null) {
+                            callback.onSaveFavoritePlaceIntoFirebase(true, null);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).addOnFailureListener(e -> {
+                if (callback != null) {
+                    callback.onSaveFavoritePlaceIntoFirebase(false, e);
+                }
+            }).addOnCanceledListener(() -> {
+                if (callback != null) {
+                    callback.onSaveFavoritePlaceIntoFirebase(false, null);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFavoritePlace(String favorite_users, String favorite_places, String uid, PlaceModel place) {
+        try {
+            db.collection(favorite_users).document(uid).collection(favorite_places).document(place.getId()).delete().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (callback != null) {
+                        callback.onRemoveFavoritePlaceFromFirebase(true, null);
+                    }
+                } else if (task.isCanceled()) {
+                    if (callback != null) {
+                        callback.onRemoveFavoritePlaceFromFirebase(false, null);
+                    }
+                }
+            }).addOnFailureListener(e -> {
+                e.printStackTrace();
+                if (callback != null) {
+                    callback.onRemoveFavoritePlaceFromFirebase(false, e);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

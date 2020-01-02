@@ -30,8 +30,6 @@
     <string name="select_a_category">Select a Category</string>
     <string name="title_text">Title</string>
     <string name="where_you_located_text">Where you located</string>
-    <string name="website_text">Website</string>
-    <string name="phone_number_text">Phone number</string>
     <string name="post_ad_text">Post Ad</string>
     <string name="web_client_id" translatable="false">597970624733-05vi5c893vjae15pbhg289mafqofvuev.apps.googleusercontent.com</string>
 
@@ -71,7 +69,7 @@
     <string name="description_test" translatable="false">A nice place to visit and hangout with friends where you can enjoy cool music and great coffee</string>
     <string name="more">Read more</string>
     <string name="place_intent_lbl" translatable="false">place</string>
-    <string name="oops_wait_for_more_places_to_visit">Wait for more places to visit</string>
+    <string name="oops_wait_for_more_places_to_visit" translatable="true">Wait for more places to visit</string>
     <string name="edit_place_nav_lbl">Edit Place</string>
     <string name="mile">mile</string>
     <string name="no_favorites">No Favorites, yet!</string>
@@ -79,4 +77,43 @@
     <string name="favorite_place_fail_to_be_saved">Favorite bot saved, try again!</string>
     <string name="favorite_place_removed">Unfavored</string>
     <string name="favorite_place_failed_to_removed">Fail, try again!</string>
+    <string name="check_network_connection">No Internet Connection, Try again!</string>
+    <string name="website_text">Website link</string>
+    <string name="phone_number_text">Phone number</string>
+    <string name="place_name">Place Name</string>
+    <string name="facebook_page_url" translatable="true">Facebook page link</string>
+    <string name="twitter_page_link" translatable="true">Twitter page link</string>
+    <string name="add_new_place_btn" translatable="true">Create New Place</string>
+    <string name="instagram_lbl" translatable="false">https://instagram.com/</string>
+    <string name="instagram_hint">Instagram page link</string>
+    <string name="place_description">Add Description…</string>
+    <string name="add_location">Add Locations</string>
+    <string name="add_location_with_maps">Add location via maps</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_you_want_to_delete_this_location">Delete this location?</string>
+    <string name="are_you_sure_you_want_to_delete_this_photo">Delete this Photo?</string>
+
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="please_choose_category">Please Choose Category!</string>
+    <string name="please_choose_images">Please Add Image !</string>
+    <string name="select_location_first">Please select location on map!</string>
+    <string name="saving">Saving…</string>
+
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="please_choose_country">Please Choose Country</string>
+    <string name="are_you_sure_with_this_location">Add this location information?</string>
+    <string name="place_add_successfully">Place added successfully!</string>
+    <string name="error_adding_place">Error, Please try again!</string>
+
+    <string name="choose_location">Choose Location</string>
+    <string name="close_bottom_sheet">Close</string>
+    <string name="undo_marker">Undo Marker</string>
+    <string name="Confirm_location">Confirm location</string>
+
+    <string name="google_maps_key" translatable="false">AIzaSyAPCbUC8TYsT5BRvY0xt7yTzVYBUdUB4ig</string>
+    <string name="request_new_place_btn">Request New Place</string>
+    <string name="street">Street</string>
 </resources>

@@ -6,4 +6,6 @@ import java.util.ArrayList;
 
 public interface HomeActivityListener {
     void readPlacesByCategoryFromFirebase(ArrayList<PlaceModel> places);
+
+    void displayConnectionError();
 }

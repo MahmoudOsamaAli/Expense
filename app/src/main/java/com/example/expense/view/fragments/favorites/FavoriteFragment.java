@@ -32,7 +32,7 @@ public class FavoriteFragment extends Fragment implements FavoritesView {
     private ArrayList<PlaceModel> places;
 
     private FavoritesRecAdapter adapter;
-    FavoritesPresenter presenter;
+    private FavoritesPresenter presenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,9 +43,9 @@ public class FavoriteFragment extends Fragment implements FavoritesView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try {
             ButterKnife.bind(this, view);
-
+            setHasOptionsMenu(true);
             init();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +55,18 @@ public class FavoriteFragment extends Fragment implements FavoritesView {
         try {
             mViewAnimator.setDisplayedChild(0);
             presenter = new FavoritesPresenter(this, (HomeActivity) getActivity());
-            presenter.getFavorites();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            if (presenter != null) {
+                presenter.getFavorites();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +93,7 @@ public class FavoriteFragment extends Fragment implements FavoritesView {
                     public void run() {
                         try {
                             if (places != null) {
-                               mViewAnimator.setDisplayedChild(2);
+                                mViewAnimator.setDisplayedChild(2);
                                 initFavoriteRecyclerView(places);
                             } else {
 

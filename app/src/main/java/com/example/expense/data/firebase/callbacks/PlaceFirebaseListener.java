@@ -7,9 +7,18 @@ import java.util.ArrayList;
 public interface PlaceFirebaseListener {
     void onReadPlaceByCategory(ArrayList<PlaceModel> data);
 
-    void onAddPlaceSuccess(boolean status, Throwable t);
+    void onRequestPlaceSuccess(boolean status, Throwable t);
 
     void onEditPlaceSuccess(boolean status, Throwable t);
 
     void onDeletePlace(boolean status);
+
+    void onReadFavoritePlaces(ArrayList<PlaceModel> places);
+
+    void onSaveFavoritePlace(boolean status, Throwable t);
+
+    void onRemoveFavoritePlaceFromFirebase(boolean status, Throwable t);
+
+    void onSaveFavoritePlaceIntoFirebase(boolean status, Throwable t);
+
 }

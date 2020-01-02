@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.expense.configs.App;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
+import com.example.expense.view.activities.Home.DBHomeCallback;
 import com.example.expense.view.activities.selectedCategory.DBPlaceDetailsCallback;
 import com.example.expense.view.fragments.favorites.DBFavoritePlaceCallback;
 
@@ -49,12 +50,11 @@ public class DBProcess {
         }
     }
 
-    private void insertLocation(LocationModel locationModel) {
+    private void insertLocation(LocationModel locationModel, String placeID) {
 
         try {
             ContentValues cv = new ContentValues();
-            cv.put(DBConfig.LocationsTable.COLUMN_ID, locationModel.getId());
-            cv.put(DBConfig.LocationsTable.COLUMN_PLACE_ID, locationModel.getPlaceID());
+            cv.put(DBConfig.LocationsTable.COLUMN_PLACE_ID, placeID);
             cv.put(DBConfig.LocationsTable.COLUMN_COUNTRY, locationModel.getCountry());
             cv.put(DBConfig.LocationsTable.COLUMN_CITY, locationModel.getCity());
             cv.put(DBConfig.LocationsTable.COLUMN_STREET, locationModel.getStreet());
@@ -78,7 +78,7 @@ public class DBProcess {
             cv.put(DBConfig.ImagesTable.COLUMN_URL, imageModel);
 
             long result = mAppContext.dbConnect().insert(DBConfig.ImagesTable.TABLE_NAME, null, cv);
-            Log.i(TAG,"insertImage(): result = " + result);
+            Log.i(TAG, "insertImage(): result = " + result);
             mAppContext.dbDisconnect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +112,7 @@ public class DBProcess {
                 mAppContext.dbDisconnect();
 
                 for (LocationModel locationModel : placeModel.getLocationModels()) {
-                    insertLocation(locationModel);
+                    insertLocation(locationModel, placeModel.getId());
                 }
 
                 for (String imageModel : placeModel.getImagesURL()) {
@@ -125,7 +125,7 @@ public class DBProcess {
         }
     }
 
-    public void saveFavorite(PlaceModel place, DBPlaceDetailsCallback callback) {
+    public void saveFavorite(PlaceModel place, Object callback) {
         try {
             ContentValues cv = new ContentValues();
 
@@ -145,10 +145,18 @@ public class DBProcess {
             mAppContext.dbConnect().insert(DBConfig.FavoritePlacesTable.TABLE_NAME, null, cv);
             mAppContext.dbDisconnect();
 
-            callback.onSaveFavoritePlace(true, null);
+            if (callback instanceof DBPlaceDetailsCallback) {
+                ((DBPlaceDetailsCallback) callback).onSaveFavoritePlace(true, null);
+            } else if (callback instanceof DBHomeCallback) {
+                ((DBHomeCallback) callback).onSaveFavorites(true, null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            callback.onSaveFavoritePlace(false, e);
+            if (callback instanceof DBPlaceDetailsCallback) {
+                ((DBPlaceDetailsCallback) callback).onSaveFavoritePlace(true, e);
+            } else if (callback instanceof DBHomeCallback) {
+                ((DBHomeCallback) callback).onSaveFavorites(true, e);
+            }
         }
     }
 
@@ -269,6 +277,7 @@ public class DBProcess {
                         location.setLongitude(longitude);
 
                         locationModels.add(location);
+                        cursor.moveToNext();
                     }
                 }
                 cursor.close();
@@ -292,6 +301,7 @@ public class DBProcess {
                     for (int i = 0; i < cursor.getCount(); i++) {
                         String url = cursor.getString(cursor.getColumnIndex(DBConfig.ImagesTable.COLUMN_URL));
                         images.add(url);
+                        cursor.moveToNext();
                     }
                 }
                 cursor.close();

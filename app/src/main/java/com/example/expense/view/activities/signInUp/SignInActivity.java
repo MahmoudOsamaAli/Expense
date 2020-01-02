@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
 import com.example.expense.Utilities.AppUtils;
+import com.example.expense.Utilities.PrefManager;
 import com.example.expense.view.activities.Home.HomeActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -105,6 +106,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.app_name)
     TextView appName;
+    PrefManager mPrefManager;
+
+    private SignInActivity mCurrent;
 
     Handler handler = new Handler();
     Runnable runnableLogIn = new Runnable() {
@@ -138,6 +142,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private void init() {
         try {
+            mCurrent = SignInActivity.this;
+
             mAuth = FirebaseAuth.getInstance();
             logInButton.setOnClickListener(this);
             signUpTxt.setOnClickListener(this);
@@ -145,6 +151,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             mGoogleButton.setOnClickListener(this);
             fbLogIn.setOnClickListener(this);
             mNormalSignUp.setOnClickListener(this);
+            mPrefManager = new PrefManager(this);
 
             Typeface nexaFontLight = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa-Light.otf");
             Typeface nexaFontBold = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa-Bold.otf");
@@ -341,7 +348,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
@@ -366,7 +373,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });
@@ -535,11 +542,19 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             if (user != null) {
                 //TODO save user data into shared preferences
-//                String m = "message";
-//                Intent i = new Intent(SignInActivity.this, HomeActivity.class);
-//                i.putExtra("message", m);
-//                startActivity(i);
-                // Start home activity
+
+                mPrefManager.saveString(PrefManager.USER_ID, user.getUid());
+                Log.i(TAG, "updateUI(): user ID: " + user.getUid());
+
+                if (user.getEmail() != null) {
+                    mPrefManager.saveString(PrefManager.USER_EMAIL, user.getEmail());
+                    Log.i(TAG, "updateUI(): user email: " + user.getEmail());
+                }
+
+                if (user.getPhoneNumber() != null) {
+                    mPrefManager.saveString(PrefManager.USER_PHONE, user.getPhoneNumber());
+                    Log.i(TAG, "updateUI(): user phone: " + user.getPhoneNumber());
+                }
                 finish();
             }
 
