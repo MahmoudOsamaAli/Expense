@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.expense.R;
 import com.example.expense.Utilities.AppUtils;
 import com.example.expense.Utilities.PrefManager;
+import com.example.expense.pojo.User;
 import com.example.expense.view.activities.Home.HomeActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -45,13 +46,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener, SignInListener {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 1;
@@ -109,6 +111,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     PrefManager mPrefManager;
 
     private SignInActivity mCurrent;
+    private SignInPresenter mPresenter;
 
     Handler handler = new Handler();
     Runnable runnableLogIn = new Runnable() {
@@ -143,7 +146,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void init() {
         try {
             mCurrent = SignInActivity.this;
-
+            mPresenter = new SignInPresenter(mCurrent, this);
             mAuth = FirebaseAuth.getInstance();
             logInButton.setOnClickListener(this);
             signUpTxt.setOnClickListener(this);
@@ -540,11 +543,23 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void updateUI(FirebaseUser user) {
 
         try {
+            Log.i(TAG, "updateUI(): is called");
             if (user != null) {
-                //TODO save user data into shared preferences
+                Log.i(TAG, "updateUI(): FirebaseUser != null");
 
+                User newUser = new User();
+                newUser.setUid(user.getUid());
+                newUser.setName(user.getDisplayName());
+                newUser.setEmail(user.getEmail());
+                newUser.setTokenId(FirebaseInstanceId.getInstance().getToken());
+
+                //TODO save user data into shared preferences
                 mPrefManager.saveString(PrefManager.USER_ID, user.getUid());
-                Log.i(TAG, "updateUI(): user ID: " + user.getUid());
+                mPrefManager.saveString(PrefManager.USER_TOKEN, newUser.getTokenId());
+                mPrefManager.saveString(PrefManager.USER_NAME, newUser.getTokenId());
+
+                Log.i(TAG, "updateUI(): user ID: " + user.getUid() + " saved in sharedPreference");
+                Log.i(TAG, "updateUI(): user ID: " + user.getDisplayName() + " saved in sharedPreference");
 
                 if (user.getEmail() != null) {
                     mPrefManager.saveString(PrefManager.USER_EMAIL, user.getEmail());
@@ -555,9 +570,38 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     mPrefManager.saveString(PrefManager.USER_PHONE, user.getPhoneNumber());
                     Log.i(TAG, "updateUI(): user phone: " + user.getPhoneNumber());
                 }
-                finish();
+
+                if (AppUtils.inNetwork(mCurrent)) {
+                    if (mPresenter != null) {
+                        Log.i(TAG, "updateUI(): saving user into firestore");
+                        mPresenter.saveUserIntoFireStore(newUser);
+                    }
+                }else{
+                    AppUtils.showAlertDialog(mCurrent,getString(R.string.check_network_connection));
+                }
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onSaveNewUser(boolean status, Throwable t) {
+        try {
+            Log.e(TAG, "onSaveNewUser(): is called");
+            if (!status) {
+                Log.e(TAG, "onSaveNewUser(): status = false");
+                if (t != null) {
+                    t.printStackTrace();
+                } else {
+                    Log.e(TAG, "onSaveNewUser(): process is canceled");
+                }
+            } else {
+                Log.d(TAG, "onSaveNewUser(): status = true");
+                Log.d(TAG, "onSaveNewUser(): user saved into firestore");
+            }
+            finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
