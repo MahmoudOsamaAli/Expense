@@ -59,7 +59,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private static final int RC_SIGN_IN = 1;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
-    CallbackManager mCallbackManager;
+    private CallbackManager mCallbackManager;
 
     @BindView(R.id.login_layout)
     LinearLayout loginLayout;
@@ -108,8 +108,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.app_name)
     TextView appName;
-    PrefManager mPrefManager;
 
+    private PrefManager mPrefManager;
     private SignInActivity mCurrent;
     private SignInPresenter mPresenter;
 
@@ -128,7 +128,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             signUpLayout.setVisibility(View.GONE);
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +228,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             mCallbackManager = CallbackManager.Factory.create();
             Log.i(TAG, "startSignInWithFB: init call back manager");
-            LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile"));
+            LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this, Arrays.asList("email", "public_profile","user_friends"));
             Log.i(TAG, "startSignInWithFB: setting permissions to LoginManager  like email and profile");
             LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
                 @Override
@@ -246,7 +245,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                 @Override
                 public void onError(FacebookException error) {
-                    Log.i(TAG, "facebook:onError", error);
+//                    Log.i(TAG, "facebook:onError", error);
+                    Log.i(TAG, "facebook:onError" + error.getCause());
+                    error.printStackTrace();
                 }
             });
         } catch (Exception e) {
@@ -410,9 +411,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Log.w(TAG, "Google sign in failed", e);
             Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show();
         }
-        if (mCallbackManager != null) {
-            boolean b = mCallbackManager.onActivityResult(requestCode, resultCode, data);
-            Log.i(TAG, "onActivityResult: calling mCallBackManager " + b);
+        try {
+            if (mCallbackManager != null) {
+                boolean b = mCallbackManager.onActivityResult(requestCode, resultCode, data);
+                Log.i(TAG, "onActivityResult: calling mCallBackManager " + b);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

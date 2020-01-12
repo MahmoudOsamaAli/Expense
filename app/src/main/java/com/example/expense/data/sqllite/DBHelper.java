@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "EXPENSE_Admin.db";
+    private static final String DB_NAME = "EXPENSE.db";
     private static final int DB_VERSION_1 = 1;
     private static final int DB_VERSION_2 = 2;
     private static final int DB_VERSION_3 = 3;

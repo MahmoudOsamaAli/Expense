@@ -29,6 +29,7 @@ public class PlaceFirebaseProcess implements LocationFBListener {
     public final static String places_collection = "places";
     public final static String favorite_places = "Favorites";
     public final static String favorite_users = "Users";
+    public final static String user_document = "User";
 
     private LocationsFirebaseProcess locationsFirebase;
     private ImagesFirebaseProcess imagesFirebase;
@@ -224,7 +225,7 @@ public class PlaceFirebaseProcess implements LocationFBListener {
     public void readFavoritePlaces(String favorite_places_child, String users_root, String UID) {
         try {
             if (db != null) {
-                db.collection(users_root).document(UID).collection(favorite_places_child).addSnapshotListener((documentSnapshot, e) -> {
+                db.collection(users_root).document(user_document).collection(UID).document(favorite_places_child).collection(places_collection).addSnapshotListener((documentSnapshot, e) -> {
                     try {
                         ArrayList<PlaceModel> favoriteResult = new ArrayList<>();
 
@@ -281,12 +282,12 @@ public class PlaceFirebaseProcess implements LocationFBListener {
         }
     }
 
-    public void saveFavoritePlace(String users_root, String favorite_places_child, String UID, PlaceModel place) {
+    public void saveFavoritePlace(String users_root, String user_document,String favorite_places_child, String UID, PlaceModel place) {
         try {
 
             Log.i(TAG, "saveFavoritePlace(): " + UID);
 
-            db.collection(users_root).document(UID).collection(favorite_places_child).add(place).addOnCompleteListener(task -> {
+            db.collection(users_root).document(user_document).collection(UID).document(favorite_places_child).collection(places_collection).document(place.getId()).set(place).addOnCompleteListener(task -> {
                 try {
                     if (task.isSuccessful()) {
                         if (callback != null) {
@@ -312,7 +313,7 @@ public class PlaceFirebaseProcess implements LocationFBListener {
 
     public void removeFavoritePlace(String favorite_users, String favorite_places, String uid, PlaceModel place) {
         try {
-            db.collection(favorite_users).document(uid).collection(favorite_places).document(place.getId()).delete().addOnCompleteListener(task -> {
+            db.collection(favorite_users).document(user_document).collection(uid).document(favorite_places).collection(places_collection).document(place.getId()).delete().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     if (callback != null) {
                         callback.onRemoveFavoritePlaceFromFirebase(true, null);

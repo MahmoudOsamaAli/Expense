@@ -12,6 +12,7 @@ public class UsersFirebase {
 
     private final String TAG = "UsersFirebase";
     private String users_root = "Users";
+    private String user_document = "User";
     private String users_info = "UserInfo";
     private FirebaseFirestore db;
     private UsersFirebaseListener listener;
@@ -30,7 +31,7 @@ public class UsersFirebase {
         Log.d(TAG, "saveUser(): is called");
 
         try {
-            db.collection(users_root).document(user.getUid()).collection(users_info).add(user).addOnCompleteListener(task -> {
+            db.collection(users_root).document(user_document).collection(user.getUid()).document(users_info).set(user).addOnCompleteListener(task -> {
                 try {
                     if (task.isComplete()) {
                         Log.d(TAG, "saveUser(): task is complete");

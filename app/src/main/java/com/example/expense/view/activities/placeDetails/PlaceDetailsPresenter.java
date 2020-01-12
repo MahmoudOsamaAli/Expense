@@ -56,7 +56,7 @@ class PlaceDetailsPresenter implements DBPlaceDetailsCallback, PlaceFirebaseList
                             if (firebaseProcess != null) {
                                 if (mPrefManager != null) {
                                     String uid = mPrefManager.readString(PrefManager.USER_ID);
-                                    firebaseProcess.saveFavoritePlace(PlaceFirebaseProcess.favorite_users, PlaceFirebaseProcess.favorite_places, uid, place);
+                                    firebaseProcess.saveFavoritePlace(PlaceFirebaseProcess.favorite_users,PlaceFirebaseProcess.user_document, PlaceFirebaseProcess.favorite_places, uid, place);
                                 }
                             }
                         } else {
