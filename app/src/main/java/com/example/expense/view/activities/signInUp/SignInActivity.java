@@ -561,7 +561,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 //TODO save user data into shared preferences
                 mPrefManager.saveString(PrefManager.USER_ID, user.getUid());
                 mPrefManager.saveString(PrefManager.USER_TOKEN, newUser.getTokenId());
-                mPrefManager.saveString(PrefManager.USER_NAME, newUser.getTokenId());
+                mPrefManager.saveString(PrefManager.USER_NAME, newUser.getName());
 
                 Log.i(TAG, "updateUI(): user ID: " + user.getUid() + " saved in sharedPreference");
                 Log.i(TAG, "updateUI(): user ID: " + user.getDisplayName() + " saved in sharedPreference");

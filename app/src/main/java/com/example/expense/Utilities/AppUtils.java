@@ -90,6 +90,20 @@ public class AppUtils {
 
     public static MaterialDialog showAlertDialogWithCustomView(Context context, int layoutResID) {
         MaterialDialog materialDialog = new MaterialDialog.Builder(context)
+                .autoDismiss(true)
+                .cancelable(true)
+                .customView(layoutResID, false)
+//                .positiveText(R.string.str_ok_lbl)
+//                .onPositive((dialog, which) -> dialog.dismiss())
+//                .positiveColorRes(R.color.red)
+                .build();
+        materialDialog.getTitleView().setTextSize(context.getResources().getDimension(R.dimen._8ssp));
+        if (!materialDialog.isShowing()) materialDialog.show();
+        return materialDialog;
+    }
+
+    public static MaterialDialog showAlertDialogWithCustomView2(Context context, int layoutResID) {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(context)
                 .autoDismiss(false)
                 .cancelable(false)
                 .customView(layoutResID, false)
@@ -101,7 +115,6 @@ public class AppUtils {
         if (!materialDialog.isShowing()) materialDialog.show();
         return materialDialog;
     }
-
     public interface CallBack {
         void OnPositiveClicked(MaterialDialog dlg);
 

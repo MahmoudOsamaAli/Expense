@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Expense</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
@@ -43,7 +43,7 @@
     <string name="required">required*</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="str_ok_lbl">ok</string>
+    <string name="str_ok_lbl">OK</string>
     <string name="loading">Loading…</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have account, yet? Sign up!</string>
     <string name="login">Login</string>
@@ -69,7 +69,7 @@
     <string name="description_test" translatable="false">A nice place to visit and hangout with friends where you can enjoy cool music and great coffee</string>
     <string name="more">Read more</string>
     <string name="place_intent_lbl" translatable="false">place</string>
-    <string name="oops_wait_for_more_places_to_visit" translatable="true">Wait for more places to visit</string>
+    <string name="oops_wait_for_more_places_to_visit">Wait for more places to visit</string>
     <string name="edit_place_nav_lbl">Edit Place</string>
     <string name="mile">mile</string>
     <string name="no_favorites">No Favorites, yet!</string>
@@ -116,4 +116,11 @@
     <string name="google_maps_key" translatable="false">AIzaSyAPCbUC8TYsT5BRvY0xt7yTzVYBUdUB4ig</string>
     <string name="request_new_place_btn">Request New Place</string>
     <string name="street">Street</string>
+    <string name="enter_your">Enter</string>
+    <string name="save">SAVE</string>
+    <string name="cancel_dlg" tools:ignore="ButtonCase">CANCEL</string>
+
+    <string name="your_phone_number">your phone No.</string>
+    <string name="your_name">your name</string>
+    <string name="name_connot_be_empty">Name cannot be empty</string>
 </resources>

@@ -12,6 +12,7 @@ public class PrefManager {
     public static final String USER_PHONE = "pref_user_phone";
     public static final String USER_TOKEN = "pref_user_firebase_token";
     public static final String USER_NAME = "pref_user_displayed_name";
+    public static final String LOGIN_FROM = "pref_login_from";
 
     private SharedPreferences prefs;
 

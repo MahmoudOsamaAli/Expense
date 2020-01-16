@@ -47,4 +47,9 @@ public class SignInPresenter implements UsersFirebaseListener {
     public void onSaveNewUserIntoFirestore(boolean status, Throwable t) {
         mSignInListener.onSaveNewUser(status,t);
     }
+
+    @Override
+    public void onUpdateUserInfo(boolean status, Throwable t) {
+
+    }
 }

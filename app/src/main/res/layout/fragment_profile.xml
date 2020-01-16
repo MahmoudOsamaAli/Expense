@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -18,7 +17,7 @@
             android:id="@+id/profile_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,19 +90,35 @@
                     android:text="Mahmoud Osama"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:visibility="visible"
                     app:layout_constraintStart_toStartOf="@id/name_label"
                     app:layout_constraintTop_toBottomOf="@id/name_icon" />
+
+                <EditText
+                    android:id="@+id/account_name_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Ahmed Kamar"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toStartOf="@id/edit_name"
+                    app:layout_constraintStart_toStartOf="@id/name_label"
+                    app:layout_constraintTop_toBottomOf="@id/name_icon" />
+
 
                 <ImageView
                     android:id="@+id/edit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:padding="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_4sdp"
-
+                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_mode_edit_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@id/name_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -111,12 +126,13 @@
 
                 <View
                     android:id="@+id/line1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_light"
+                    app:layout_constraintEnd_toEndOf="@id/edit_name"
                     app:layout_constraintStart_toStartOf="@id/name_label"
-                    app:layout_constraintTop_toBottomOf="@id/account_name" />
+                    app:layout_constraintTop_toBottomOf="@id/account_name_edit_text" />
 
 
                 <ImageView
@@ -154,29 +170,30 @@
                     app:layout_constraintStart_toStartOf="@id/mail_label"
                     app:layout_constraintTop_toBottomOf="@id/mail_icon" />
 
+
                 <ImageView
                     android:id="@+id/edit_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
-                    android:padding="@dimen/_5sdp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/mail_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/mail_label" />
 
                 <View
                     android:id="@+id/line2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_light"
-                    app:layout_constraintStart_toStartOf="@id/name_label"
+                    app:layout_constraintEnd_toEndOf="@id/line1"
+                    app:layout_constraintStart_toStartOf="@id/line1"
                     app:layout_constraintTop_toBottomOf="@id/mail" />
-
-
 
 
                 <ImageView
@@ -211,6 +228,22 @@
                     android:text="@string/phone_number"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="@id/phone_label"
+                    app:layout_constraintTop_toBottomOf="@id/phone_icon" />
+
+                <EditText
+                    android:id="@+id/phone_number_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:inputType="phone"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="01096611061"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toStartOf="@id/edit_phone_number"
                     app:layout_constraintStart_toStartOf="@id/phone_label"
                     app:layout_constraintTop_toBottomOf="@id/phone_icon" />
 
@@ -219,9 +252,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
-                    android:padding="@dimen/_5sdp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_mode_edit_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@id/phone_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -229,11 +262,12 @@
 
                 <View
                     android:id="@+id/line3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_light"
-                    app:layout_constraintStart_toStartOf="@id/phone_label"
+                    app:layout_constraintEnd_toEndOf="@id/line1"
+                    app:layout_constraintStart_toStartOf="@id/line1"
                     app:layout_constraintTop_toBottomOf="@id/phone_number" />
 
 
@@ -277,13 +311,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
-                    android:padding="@dimen/_5sdp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_mode_edit_black_24dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/country_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/country_label" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -293,7 +338,7 @@
         android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

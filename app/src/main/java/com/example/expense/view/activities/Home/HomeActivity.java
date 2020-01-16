@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.expense.R;
 import com.example.expense.Utilities.AppUtils;
+import com.example.expense.Utilities.PrefManager;
 import com.example.expense.pojo.Model.LocationModel;
 import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.fragments.aboutUs.AboutUsFragment;
@@ -56,10 +57,12 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
     private final static String TAG = "HomeActivity";
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
     public HomeActivity mCurrent;
-
     private HomeActivityPresenter presenter;
     private FusedLocationProviderClient fusedLocationClient;
     public Location mCurrentLocation;
+
+    private PrefManager mPrefManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,22 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             initLocation();
             //calling init fun
             init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            String loginFrom = mPrefManager.readString(PrefManager.LOGIN_FROM);
+
+            if (loginFrom != null && loginFrom.matches("Profile")) {
+                Log.i(TAG, "onResume(): login from Profile");
+                mPrefManager.saveString(PrefManager.LOGIN_FROM, null);
+                setFragments(new ProfileFragment(), AnimationStates.BOTTOM_TO_TOP);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,6 +137,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
             mCurrent = HomeActivity.this;
             //initializing presenter
             presenter = new HomeActivityPresenter(mCurrent, this);
+
+            mPrefManager = new PrefManager(mCurrent);
 
             //setting support action bar
             setSupportActionBar(toolbar);
@@ -379,9 +400,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    AppUtils.showAlertDialog(mCurrent,getString(R.string.check_network_connection));
-                }catch (Exception e){
+                try {
+                    AppUtils.showAlertDialog(mCurrent, getString(R.string.check_network_connection));
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

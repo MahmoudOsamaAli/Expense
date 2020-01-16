@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String email;
     private String tokenId;
+    private String phone;
 
     public User() {
     }
@@ -40,5 +41,13 @@ public class User {
 
     public void setTokenId(String tokenId) {
         this.tokenId = tokenId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

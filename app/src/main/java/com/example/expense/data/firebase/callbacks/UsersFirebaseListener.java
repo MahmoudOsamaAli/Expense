@@ -5,4 +5,6 @@ public interface UsersFirebaseListener {
 
     void onSaveNewUserIntoFirestore(boolean status, Throwable t);
 
+    void onUpdateUserInfo(boolean status,Throwable t);
+
 }
