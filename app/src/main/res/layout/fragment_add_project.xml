@@ -1,348 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="65dp"
+    android:background="@color/text_color"
+    android:elevation="6dp"
+    >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Spinner
-                android:id="@+id/fragment_add_place_select_category_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+            <TextView
+                android:id="@+id/header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:entries="@array/categories"
-                android:gravity="center_vertical"
-                android:padding="8dp"
-                android:prompt="@string/select_a_category"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/text_content"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:drawableStart="@drawable/ic_format_list_bulleted_black_24dp"
+                android:drawableLeft="@drawable/ic_format_list_bulleted_black_24dp"
+                android:drawablePadding="16dp"
+                android:text="@string/new_project_txt"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/border1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/spinner_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:contentDescription="@string/select_a_category"
-                android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/fragment_add_place_select_category_spinner"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_select_category_spinner"
-                app:layout_constraintTop_toTopOf="@+id/fragment_add_place_select_category_spinner"
-                android:layout_marginRight="@dimen/_8sdp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_title_edit_text_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/place_name"
-                android:inputType="textPersonName"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_select_category_spinner"
-                app:layout_constraintStart_toStartOf="@+id/fragment_add_place_select_category_spinner"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_add_place_select_category_spinner">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_title_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12ssp"
-                    android:inputType="textPersonName" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_phone_number_text_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/phone_number_text"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_title_edit_text_container"
-                app:layout_constraintStart_toStartOf="@+id/fragment_add_place_title_edit_text_container"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_title_edit_text_container">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_phone_number_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="phone"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_facebook_url_et_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/facebook_page_url"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_phone_number_text_container">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_facebook_url_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="textUri"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_twitter_edit_text_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/twitter_page_link"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_facebook_url_et_container">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_twitter_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="textUri"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_instagram_edit_text_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/instagram_hint"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_twitter_edit_text_container">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_instagram_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="textUri"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_10ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fragment_add_place_website_edit_text_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:hint="@string/website_text"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_instagram_edit_text_container">
-
-                <EditText
-                    android:id="@+id/fragment_add_place_website_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:gravity="center_vertical"
-                    android:inputType="textUri"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_10ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <EditText
-                android:id="@+id/fragment_add_place_description_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_150sdp"
-                android:layout_marginTop="16dp"
-                android:autofillHints="@string/place_description"
-                android:background="@drawable/custom_add_place_edit_text_background"
-                android:gravity="top|start"
-                android:hint="@string/place_description"
-                android:inputType="textMultiLine"
-                android:padding="8dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_website_edit_text_container"
-                app:layout_constraintStart_toStartOf="@+id/fragment_add_place_website_edit_text_container"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_add_place_website_edit_text_container" />
-
             <View
-                android:id="@+id/fragment_add_place_border1"
+                android:id="@+id/border1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/gray_dark"
+                android:background="@color/gray_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_description_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/header_text" />
+
+            <ImageView
+                android:id="@+id/add_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_plus_circle_purple"
+                app:layout_constraintStart_toStartOf="@id/add_photo_text"
+                app:layout_constraintTop_toBottomOf="@id/photo_details" />
 
             <TextView
-                android:id="@+id/fragment_add_place_add_photo_text"
+                android:id="@+id/add_photo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/add_photo_text"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/text_header"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/fragment_add_place_website_edit_text_container"
-                app:layout_constraintStart_toStartOf="@id/fragment_add_place_website_edit_text_container"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_border1" />
+                app:layout_constraintStart_toStartOf="@id/select_category_text"
+                app:layout_constraintTop_toBottomOf="@id/select_category_text" />
 
             <TextView
-                android:id="@+id/fragment_add_place_photo_details"
-                android:layout_width="wrap_content"
+                android:id="@+id/photo_details"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
-                android:gravity="center"
+                android:textSize="@dimen/text_content"
+                android:textColor="@color/gray_dark"
                 android:text="@string/add_photo_details"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintEnd_toEndOf="@id/fragment_add_place_add_photo_text"
-                app:layout_constraintStart_toStartOf="@id/fragment_add_place_add_photo_text"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_add_photo_text" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fragment_add_place_add_photo_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:elevation="@dimen/_8sdp"
-                android:src="@drawable/ic_add_a_photo_black_24dp"
-                app:backgroundTint="@color/purple"
-                app:fabSize="auto"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_photo_details"
-                tools:targetApi="lollipop" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_add_place_photos_rv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:maxHeight="@dimen/_80sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_add_place_add_photo_fab" />
-
-            <View
-                android:id="@+id/fragment_add_place_border2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_photos_rv" />
+                app:layout_constraintEnd_toEndOf="@id/select_category_text"
+                app:layout_constraintStart_toStartOf="@id/select_category_text"
+                app:layout_constraintTop_toBottomOf="@id/add_photo_text" />
 
             <TextView
-                android:id="@+id/fragment_add_place_where_you_locate_text"
+                android:id="@+id/select_category_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/search_view_background"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:drawableRight="@drawable/ic_arrow_right"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textSize="@dimen/text_content"
+                android:text="@string/select_a_category"
+                android:textColor="@color/gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/border1"
+                />
+
+            <EditText
+                android:id="@+id/title_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/search_view_background"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:focusable="false"
+                android:text="@string/title_text"
+                android:textSize="@dimen/text_content"
+                android:textColor="@color/gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_button"
+                tools:text="Title" />
+            <TextView
+                android:id="@+id/where_you_locate_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_edit_text"
+                app:layout_constraintStart_toStartOf="@id/title_edit_text"
+                android:text="@string/where_you_located_text"
                 android:layout_marginTop="16dp"
-                android:text="@string/add_location"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/text_header"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_add_photo_text"
-                app:layout_constraintStart_toStartOf="@id/fragment_add_place_add_photo_text"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_border2" />
-
+                />
             <TextView
-                android:id="@+id/fragment_add_place_connect_with_google"
+                android:id="@+id/connect_with_google"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:text="@string/add_location_with_maps"
+                app:layout_constraintTop_toBottomOf="@id/where_you_locate_text"
+                app:layout_constraintStart_toStartOf="@id/title_edit_text"
+                android:text="Add location with google maps"
                 android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_where_you_locate_text"
-                app:layout_constraintStart_toStartOf="@id/fragment_add_place_where_you_locate_text"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_where_you_locate_text" />
+                android:textSize="@dimen/text_content"
+                />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fragment_add_place_add_location_fab"
+            <ImageView
+                android:id="@+id/add_location_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_plus_circle_purple"
+                app:layout_constraintTop_toBottomOf="@id/connect_with_google"
+                app:layout_constraintStart_toStartOf="@id/where_you_locate_text"
+                />
+            <EditText
+                android:id="@+id/website_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/search_view_background"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:focusable="false"
+                android:textSize="@dimen/text_content"
+                android:text="@string/website_text"
+                android:textColor="@color/gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_location_image"
+                />
+            <EditText
+                android:id="@+id/phone_number_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/search_view_background"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:focusable="false"
+                android:text="@string/phone_number_text"
+                android:textColor="@color/gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="@dimen/text_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/website_edit_text"
+                />
+            <Button
+                android:id="@+id/post_ad_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:elevation="@dimen/_8sdp"
-                android:src="@drawable/ic_add_location_black_24dp"
-                app:backgroundTint="@color/purple"
-                app:fabSize="auto"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_add_place_add_photo_fab"
-                app:layout_constraintStart_toStartOf="@id/fragment_add_place_add_photo_fab"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_connect_with_google"
-                tools:targetApi="lollipop" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/fragment_add_place_locations_rv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:maxHeight="@dimen/_80sdp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_add_place_add_location_fab" />
-
-            <Button
-                android:id="@+id/fragment_add_place_post_ad_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_14sdp"
-                android:background="@drawable/custom_add_place_btn_background"
-                android:elevation="@dimen/_8sdp"
-                android:text="@string/request_new_place_btn"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_place_locations_rv"
-                tools:targetApi="lollipop" />
-
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_text"
+                android:text="@string/post_ad_text"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
-    <include layout="@layout/activity_maps" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.cardview.widget.CardView>

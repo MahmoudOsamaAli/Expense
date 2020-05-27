@@ -51,22 +51,4 @@
             android:textStyle="bold"
             tools:text="@string/contact_us" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/distance_value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_4sdp"
-        app:layout_constraintEnd_toStartOf="@+id/distance_lbl"
-        app:layout_constraintTop_toTopOf="@+id/location_txt"
-        android:layout_marginRight="@dimen/_4sdp" />
-
-    <TextView
-        android:id="@+id/distance_lbl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:text="@string/mile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/location_txt"
-        android:layout_marginRight="@dimen/_12sdp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

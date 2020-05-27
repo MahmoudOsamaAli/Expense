@@ -5,29 +5,24 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expense.R;
-import com.example.expense.pojo.Model.PlaceModel;
 import com.example.expense.view.activities.placeDetails.PlaceDetails;
-import com.squareup.picasso.Picasso;
+import com.example.expense.pojo.RestaurantModel;
 
 import java.util.ArrayList;
 
 public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCategoryAdapter.MyHolder> {
 
     private Context mContext;
-    private ArrayList<PlaceModel> data;
-    private int lastPosition = -1;
+    private ArrayList<RestaurantModel> data;
 
-    public SelectedCategoryAdapter(Context mContext, ArrayList<PlaceModel> data) {
+    public SelectedCategoryAdapter(Context mContext, ArrayList<RestaurantModel> data) {
         this.mContext = mContext;
         this.data = data;
     }
@@ -42,22 +37,8 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        try {
-            holder.mName.setText(data.get(position).getName());
-            holder.mDescriptionTV.setText(data.get(position).getDescription());
-            Picasso.get().load(data.get(position).getImagesURL().get(0)).into(holder.mImage);
-//            setAnimation(holder.parent , position);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
+        holder.mName.setText(data.get(position).getmName());
+        holder.mImage.setImageResource(data.get(position).getmImage());
     }
 
     @Override
@@ -65,27 +46,16 @@ public class SelectedCategoryAdapter extends RecyclerView.Adapter<SelectedCatego
         return data.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
-        TextView mName, mDescriptionTV;
+    class MyHolder extends RecyclerView.ViewHolder{
+        TextView mName;
         ImageView mImage;
-        ConstraintLayout parent;
 
         MyHolder(@NonNull View itemView) {
             super(itemView);
-            try {
-                parent = itemView.findViewById(R.id.parent);
-                mName = itemView.findViewById(R.id.place_name);
-                mImage = itemView.findViewById(R.id.place_image);
-                mDescriptionTV = itemView.findViewById(R.id.description_preview);
-
-                itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(mContext, PlaceDetails.class);
-                    intent.putExtra(mContext.getString(R.string.place_intent_lbl), data.get(getAdapterPosition()));
-                    mContext.startActivity(intent);
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mName = itemView.findViewById(R.id.place_name);
+            mImage = itemView.findViewById(R.id.place_image);
+            itemView.setOnClickListener(v ->
+                    mContext.startActivity(new Intent(mContext , PlaceDetails.class)));
         }
     }
 }

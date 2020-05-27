@@ -1,11 +1,10 @@
 package com.example.expense.view.activities.selectedCategory;
 
 
-import com.example.expense.pojo.Model.PlaceModel;
+import com.example.expense.pojo.RestaurantModel;
 
 import java.util.ArrayList;
 
 public interface SelectedCategoryView {
-
-    void readPlacesByCategoryFromFirebase(ArrayList<PlaceModel> places);
+    void onGetCategoryData(ArrayList<RestaurantModel> list);
 }

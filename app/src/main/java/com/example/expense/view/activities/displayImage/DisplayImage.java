@@ -7,15 +7,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.expense.R;
+import com.example.expense.adapters.FullScreenPagerAdapter;
+import com.example.expense.data.Data;
+import com.example.expense.pojo.PlaceImage;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DisplayImage extends AppCompatActivity {
+public class DisplayImage extends AppCompatActivity implements DisplayImageView{
 
     @BindView(R.id.viewpager_full_screen)
     ViewPager viewPager;
     int position;
+    private DisplayImagePresenter presenter;
     private static final String TAG = "DisplayImage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +32,16 @@ public class DisplayImage extends AppCompatActivity {
     }
 
     private void init() {
+        presenter = new DisplayImagePresenter(this);
+        presenter.getList();
         position = getIntent().getIntExtra("position" ,0);
         Log.i(TAG, "init: image position = "+position);
+    }
+
+    @Override
+    public void onGetImages(ArrayList<PlaceImage> list) {
+        FullScreenPagerAdapter adapter = new FullScreenPagerAdapter(this, list);
+        viewPager.setAdapter(adapter);
+//        viewPager.setCurrentItem(position);
     }
 }

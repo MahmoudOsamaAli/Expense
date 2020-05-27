@@ -1,5 +1,9 @@
 package com.example.expense.view.fragments.home;
 
+import com.example.expense.data.Data;
+import com.example.expense.pojo.HomeViewModel;
+
+import java.util.ArrayList;
 
 public class HomePresenter {
 
@@ -9,10 +13,10 @@ public class HomePresenter {
         this.view = view;
     }
 
-//    private ArrayList<HomeViewModel> getCategories(){
-
-//    }
-//    void getCategoriesData(){
-//        view.onGetCategories(getCategories());
-//    }
+    private ArrayList<HomeViewModel> getCategories(){
+        return Data.getCategoriesData();
+    }
+    void getCategoriesData(){
+        view.onGetCategories(getCategories());
+    }
 }
