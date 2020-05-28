@@ -2,23 +2,52 @@ package com.example.expense.pojo;
 
 public class User {
 
-    private static String name;
-    private static String email;
+    private String uid;
+    private String name;
+    private String email;
+    private String tokenId;
+    private String phone;
 
+    public User() {
+    }
 
-    public static String getName() {
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public static void setName(String mName) {
-        name = mName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public static void setEmail(String mEmail) {
-        email = mEmail;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

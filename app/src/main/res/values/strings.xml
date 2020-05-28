@@ -1,10 +1,10 @@
-<resources>
-    <string name="app_name">Expense</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Expense</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
-    <string name="expense">EXPENSE</string>
+    <string name="expense" translatable="false">EXPENSE</string>
     <string name="pick_a_category">Pick a Category</string>
     <string name="contact_us">Contact Us</string>
     <string name="where_we_located">Where We Located</string>
@@ -30,16 +30,97 @@
     <string name="select_a_category">Select a Category</string>
     <string name="title_text">Title</string>
     <string name="where_you_located_text">Where you located</string>
-    <string name="website_text">Website</string>
-    <string name="phone_number_text">Phone number</string>
     <string name="post_ad_text">Post Ad</string>
-    <string name="web_client_id">597970624733-05vi5c893vjae15pbhg289mafqofvuev.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">597970624733-05vi5c893vjae15pbhg289mafqofvuev.apps.googleusercontent.com</string>
 
-    <string name="facebook_app_id">406032423406906</string>
-    <string name="fb_login_protocol_scheme">fb406032423406906</string>
-    <string name="google_status_fmt">Google User: %s</string>
+    <string name="facebook_app_id" translatable="false">406032423406906</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb406032423406906</string>
+    <string name="google_status_fmt" translatable="false">Google User: %s</string>
     <string name="sign_out">Sign out</string>
     <string name="sign_up">Sign up</string>
     <string name="login_now">Log-in</string>
 
+    <string name="required">required*</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="str_ok_lbl">OK</string>
+    <string name="loading">Loading…</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have account, yet? Sign up!</string>
+    <string name="login">Login</string>
+    <string name="enter_first_name_and_last_name">First Name And Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="continue_with_google">Continue with google</string>
+    <string name="sign_up_with_facebook">Sign up with facebook</string>
+    <string name="sign_up_with_twitter">Sign up with twitter</string>
+    <string name="back">back</string>
+    <string name="gender_text">Male</string>
+    <string name="search_hint">Search…</string>
+    <string name="search_title">Search</string>
+
+    <string name="category">Category</string>
+<!--    <string name="coffee">Cafe &amp; Restaurant</string>-->
+    <string name="coffee">Cafe</string>
+    <string name="electronics">Electronics</string>
+    <string name="restaurant">Entertainment</string>
+    <string name="clothes">Clothes</string>
+    <string name="beauty">Fashion</string>
+    <string name="others">Others</string>
+    <string name="place_name_test" translatable="false">Garden city Cafe</string>
+    <string name="description_test" translatable="false">A nice place to visit and hangout with friends where you can enjoy cool music and great coffee</string>
+    <string name="more">Read more</string>
+    <string name="place_intent_lbl" translatable="false">place</string>
+    <string name="oops_wait_for_more_places_to_visit">Wait for more places to visit</string>
+    <string name="edit_place_nav_lbl">Edit Place</string>
+    <string name="mile">mile</string>
+    <string name="no_favorites">No Favorites, yet!</string>
+    <string name="favorite_place_saved">Favorite saved!</string>
+    <string name="favorite_place_fail_to_be_saved">Favorite bot saved, try again!</string>
+    <string name="favorite_place_removed">Unfavored</string>
+    <string name="favorite_place_failed_to_removed">Fail, try again!</string>
+    <string name="check_network_connection">No Internet Connection, Try again!</string>
+    <string name="website_text">Website link</string>
+    <string name="phone_number_text">Phone number</string>
+    <string name="place_name">Place Name</string>
+    <string name="facebook_page_url" translatable="true">Facebook page link</string>
+    <string name="twitter_page_link" translatable="true">Twitter page link</string>
+    <string name="add_new_place_btn" translatable="true">Create New Place</string>
+    <string name="instagram_lbl" translatable="false">https://instagram.com/</string>
+    <string name="instagram_hint">Instagram page link</string>
+    <string name="place_description">Add Description…</string>
+    <string name="add_location">Add Locations</string>
+    <string name="add_location_with_maps">Add location via maps</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_you_want_to_delete_this_location">Delete this location?</string>
+    <string name="are_you_sure_you_want_to_delete_this_photo">Delete this Photo?</string>
+
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="please_choose_category">Please Choose Category!</string>
+    <string name="please_choose_images">Please Add Image !</string>
+    <string name="select_location_first">Please select location on map!</string>
+    <string name="saving">Saving…</string>
+
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="please_choose_country">Please Choose Country</string>
+    <string name="are_you_sure_with_this_location">Add this location information?</string>
+    <string name="place_add_successfully">Place added successfully!</string>
+    <string name="error_adding_place">Error, Please try again!</string>
+
+    <string name="choose_location">Choose Location</string>
+    <string name="close_bottom_sheet">Close</string>
+    <string name="undo_marker">Undo Marker</string>
+    <string name="Confirm_location">Confirm location</string>
+
+    <string name="google_maps_key" translatable="false">AIzaSyAPCbUC8TYsT5BRvY0xt7yTzVYBUdUB4ig</string>
+    <string name="request_new_place_btn">Request New Place</string>
+    <string name="street">Street</string>
+    <string name="enter_your">Enter</string>
+    <string name="save">SAVE</string>
+    <string name="cancel_dlg" tools:ignore="ButtonCase">CANCEL</string>
+
+    <string name="your_phone_number">your phone No.</string>
+    <string name="your_name">your name</string>
+    <string name="name_connot_be_empty">Name cannot be empty</string>
 </resources>
